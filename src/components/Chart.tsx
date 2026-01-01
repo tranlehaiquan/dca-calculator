@@ -88,9 +88,9 @@ export function Chart({ data }: ChartProps) {
                 borderRadius: '8px',
                 color: '#fff'
               }}
-              formatter={(value: number, name: string) => {
-                if (name === "BTC Price") return [`$${value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, name];
-                return [`$${value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, name];
+              formatter={(value, name) => {
+                if (name === "BTC Price") return [`$${value?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, name];
+                return [`$${value?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, name];
               }}
               labelFormatter={(label) => format(new Date(label), 'MMM d, yyyy')}
             />
