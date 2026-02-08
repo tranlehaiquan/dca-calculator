@@ -1,8 +1,10 @@
 
-import type { Frequency } from '../api';
-import { Calendar, DollarSign, RefreshCw } from 'lucide-react';
+import type { Frequency, Asset } from '../api';
+import { Calendar, DollarSign, RefreshCw, Coins } from 'lucide-react';
 
 interface InputFormProps {
+  asset: Asset;
+  setAsset: (val: Asset) => void;
   amount: number;
   setAmount: (val: number) => void;
   frequency: Frequency;
@@ -16,6 +18,8 @@ interface InputFormProps {
 }
 
 export function InputForm({
+  asset,
+  setAsset,
   amount,
   setAmount,
   frequency,
@@ -29,6 +33,20 @@ export function InputForm({
 }: InputFormProps) {
   return (
     <div className="input-card">
+      <div className="form-group">
+        <label>
+          <Coins size={16} /> Select Asset
+        </label>
+        <select
+          value={asset}
+          onChange={(e) => setAsset(e.target.value as Asset)}
+        >
+          <option value="BTC">Bitcoin (BTC)</option>
+          <option value="Gold">Gold (PAXG)</option>
+          <option value="Silver">Silver (KAG)</option>
+        </select>
+      </div>
+
       <div className="form-group">
         <label>
           <DollarSign size={16} /> Investment Amount

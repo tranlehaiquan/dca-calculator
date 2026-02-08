@@ -1,12 +1,14 @@
 
-import type { InvestmentResult } from '../api';
-import { TrendingUp, TrendingDown, Bitcoin, Wallet } from 'lucide-react';
+import { ASSET_CONFIG } from '../api';
+import type { InvestmentResult, Asset } from '../api';
+import { TrendingUp, TrendingDown, Wallet, Coins } from 'lucide-react';
 
 interface ResultsDashboardProps {
   result: InvestmentResult | null;
+  asset: Asset;
 }
 
-export function ResultsDashboard({ result }: ResultsDashboardProps) {
+export function ResultsDashboard({ result, asset }: ResultsDashboardProps) {
   if (!result) return null;
 
   const isProfit = result.roi >= 0;
@@ -14,6 +16,8 @@ export function ResultsDashboard({ result }: ResultsDashboardProps) {
     style: 'currency',
     currency: 'USD',
   });
+
+  const config = ASSET_CONFIG[asset];
 
   return (
     <div className="dashboard-grid">
@@ -27,10 +31,10 @@ export function ResultsDashboard({ result }: ResultsDashboardProps) {
 
       <div className="stat-card featured">
         <div className="stat-header">
-          <Bitcoin className="icon-subtle" />
-          <span>Value in Bitcoin</span>
+          <Coins className="icon-subtle" />
+          <span>Value in {config.label}</span>
         </div>
-        <div className="stat-value">{result.totalBitcoin.toFixed(8)} BTC</div>
+        <div className="stat-value">{result.totalUnits.toFixed(asset === 'BTC' ? 8 : 4)} {config.unit}</div>
         <div className="sub-value">Current Value: {formatting.format(result.currentValue)}</div>
       </div>
 

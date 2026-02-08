@@ -11,16 +11,21 @@ import {
 } from 'recharts';
 import { useState } from 'react';
 import { format } from 'date-fns';
-import type { InvestmentResult } from '../api';
+import { ASSET_CONFIG } from '../api';
+import type { InvestmentResult, Asset } from '../api';
 
 interface ChartProps {
   data: InvestmentResult['history'];
+  asset: Asset;
 }
 
-export function Chart({ data }: ChartProps) {
+export function Chart({ data, asset }: ChartProps) {
   const [showPrice, setShowPrice] = useState(false);
 
   if (!data || data.length === 0) return null;
+
+  const config = ASSET_CONFIG[asset];
+  const mainColor = asset === 'BTC' ? '#F7931A' : asset === 'Gold' ? '#D4AF37' : '#94a3b8';
 
   return (
     <div className="chart-container">
@@ -31,9 +36,9 @@ export function Chart({ data }: ChartProps) {
             type="checkbox" 
             checked={showPrice} 
             onChange={(e) => setShowPrice(e.target.checked)}
-            style={{ accentColor: '#F7931A' }}
+            style={{ accentColor: mainColor }}
           />
-          Show BTC Price
+          Show {config.label} Price
         </label>
       </div>
       
@@ -42,8 +47,8 @@ export function Chart({ data }: ChartProps) {
           <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#F7931A" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#F7931A" stopOpacity={0}/>
+                <stop offset="5%" stopColor={mainColor} stopOpacity={0.3}/>
+                <stop offset="95%" stopColor={mainColor} stopOpacity={0}/>
               </linearGradient>
               <linearGradient id="colorInvested" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#94a3b8" stopOpacity={0.3}/>
@@ -89,7 +94,6 @@ export function Chart({ data }: ChartProps) {
                 color: '#fff'
               }}
               formatter={(value, name) => {
-                if (name === "BTC Price") return [`$${value?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, name];
                 return [`$${value?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, name];
               }}
               labelFormatter={(label) => format(new Date(label), 'MMM d, yyyy')}
@@ -109,7 +113,7 @@ export function Chart({ data }: ChartProps) {
               yAxisId="left"
               type="monotone" 
               dataKey="value" 
-              stroke="#F7931A" 
+              stroke={mainColor} 
               fillOpacity={1} 
               fill="url(#colorValue)" 
               name="Portfolio Value"
@@ -123,7 +127,7 @@ export function Chart({ data }: ChartProps) {
                 stroke="#10b981" 
                 fillOpacity={1} 
                 fill="url(#colorPrice)" 
-                name="BTC Price"
+                name={`${config.label} Price`}
                 strokeWidth={2}
               />
             )}

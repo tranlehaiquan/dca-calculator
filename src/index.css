@@ -2,13 +2,31 @@
   --bg-dark: #0f111a;
   --bg-card: rgba(30, 32, 47, 0.7);
   --bg-card-hover: rgba(40, 42, 60, 0.8);
-  --primary: #F7931A;
-  --primary-gradient: linear-gradient(135deg, #F7931A 0%, #ffbb54 100%);
+  --btc-color: #F7931A;
+  --gold-color: #D4AF37;
+  --silver-color: #C0C0C0;
+  --asset-primary: var(--btc-color);
+  --asset-gradient: linear-gradient(135deg, var(--btc-color) 0%, #ffbb54 100%);
   --text-primary: #ffffff;
   --text-secondary: #94a3b8;
   --border-color: rgba(255, 255, 255, 0.1);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.asset-btc {
+  --asset-primary: var(--btc-color);
+  --asset-gradient: linear-gradient(135deg, var(--btc-color) 0%, #ffbb54 100%);
+}
+
+.asset-gold {
+  --asset-primary: var(--gold-color);
+  --asset-gradient: linear-gradient(135deg, var(--gold-color) 0%, #f1d592 100%);
+}
+
+.asset-silver {
+  --asset-primary: var(--silver-color);
+  --asset-gradient: linear-gradient(135deg, var(--silver-color) 0%, #e5e5e5 100%);
 }
 
 body {
@@ -46,8 +64,8 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-.bitcoin-color {
-  background: var(--primary-gradient);
+.asset-color {
+  background: var(--asset-gradient);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -68,8 +86,6 @@ body {
   text-align: center;
   box-shadow: var(--glass-shadow);
 }
-
-/* Component Styles */
 
 /* Layout */
 .calculator-layout {
@@ -140,13 +156,13 @@ input, select {
 
 input:focus, select:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--asset-primary);
   background: rgba(0, 0, 0, 0.4);
 }
 
 .calculate-btn {
   width: 100%;
-  background: var(--primary-gradient);
+  background: var(--asset-gradient);
   border: none;
   border-radius: 8px;
   padding: 1rem;
@@ -191,8 +207,9 @@ input:focus, select:focus {
 }
 
 .stat-card.featured {
-  background: linear-gradient(135deg, rgba(247, 147, 26, 0.1) 0%, rgba(247, 147, 26, 0.05) 100%);
-  border-color: rgba(247, 147, 26, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border-color: var(--asset-primary);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
 }
 
 .stat-card.profit .stat-value { color: #10b981; }
@@ -211,6 +228,7 @@ input:focus, select:focus {
   width: 18px;
   height: 18px;
   opacity: 0.7;
+  color: var(--asset-primary);
 }
 
 .stat-value {
@@ -239,8 +257,8 @@ input:focus, select:focus {
   color: var(--text-primary);
 }
 
-.bitcoin-logo {
-  color: var(--primary);
+.asset-logo {
+  color: var(--asset-primary);
   margin-bottom: 1rem;
 }
 
