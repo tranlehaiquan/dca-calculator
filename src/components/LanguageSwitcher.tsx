@@ -19,11 +19,14 @@ export function LanguageSwitcher() {
   return (
     <div className="flex items-center gap-2">
       <Globe size={16} className="text-muted-foreground" />
-      <Select value={i18n.language?.split('-')[0]} onValueChange={changeLanguage}>
-        <SelectTrigger className="w-[140px] bg-white/5 border-white/10 h-8 text-xs">
+      <Select
+        value={i18n.language?.split("-")[0]}
+        onValueChange={changeLanguage}
+      >
+        <SelectTrigger className="h-8 w-[140px] border-white/10 bg-white/5 text-xs">
           <SelectValue placeholder="Language" />
         </SelectTrigger>
-        <SelectContent className="bg-slate-900 border-white/10 max-h-[300px]">
+        <SelectContent className="max-h-[300px] border-white/10 bg-slate-900">
           {Object.entries(LANGUAGES).map(([code, label]) => (
             <SelectItem key={code} value={code}>
               {label}

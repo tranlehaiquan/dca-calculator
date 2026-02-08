@@ -15,7 +15,7 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -101,30 +101,17 @@
     @apply border-border outline-ring/50;
   }
 
-    body {
+  body {
+    @apply bg-background text-foreground;
 
-      @apply bg-background text-foreground;
-
-      font-family:
-
-        "Inter",
-
-        system-ui,
-
-        -apple-system,
-
-        sans-serif;
-
-    }
-
-  
-
-    .bg-asset-gradient {
-
-      background-image: var(--asset-gradient);
-
-    }
-
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      sans-serif;
   }
 
-  
+  .bg-asset-gradient {
+    background-image: var(--asset-gradient);
+  }
+}

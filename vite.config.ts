@@ -1,11 +1,24 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import sitemap from 'vite-plugin-sitemap'
-import path from 'path'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import sitemap from "vite-plugin-sitemap";
+import path from "path";
 
-const langs = ['en', 'vi', 'es', 'fr', 'de', 'ja', 'ko', 'zh', 'ru', 'pt', 'it', 'hi'];
-const dynamicRoutes = langs.map(lang => `?lng=${lang}`);
+const langs = [
+  "en",
+  "vi",
+  "es",
+  "fr",
+  "de",
+  "ja",
+  "ko",
+  "zh",
+  "ru",
+  "pt",
+  "it",
+  "hi",
+];
+const dynamicRoutes = langs.map((lang) => `?lng=${lang}`);
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,7 +26,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     sitemap({
-      hostname: 'https://yourdomain.com', // Replace with your actual domain
+      hostname: "https://btc-dca-calculator.vercel.app",
       dynamicRoutes,
     }),
   ],
@@ -22,4 +35,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-})
+});

@@ -1,9 +1,14 @@
-import type { Frequency, Asset } from '../constants';
-import { Calendar as CalendarIcon, DollarSign, RefreshCw, Coins } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import type { Frequency, Asset } from "../constants";
+import {
+  Calendar as CalendarIcon,
+  DollarSign,
+  RefreshCw,
+  Coins,
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -48,87 +53,105 @@ export function InputForm({
   endDate,
   setEndDate,
   onCalculate,
-  isLoading
+  isLoading,
 }: InputFormProps) {
   const { t } = useTranslation();
   const startD = startDate ? parseISO(startDate) : undefined;
   const endD = endDate ? parseISO(endDate) : undefined;
 
   return (
-    <Card className="bg-card/50 backdrop-blur-xl border-white/10 shadow-2xl">
+    <Card className="bg-card/50 border-white/10 shadow-2xl backdrop-blur-xl">
       <CardHeader>
-        <CardTitle className="text-xl font-bold flex items-center gap-2">
-          {t('input.title')}
+        <CardTitle className="flex items-center gap-2 text-xl font-bold">
+          {t("input.title")}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
-          <Label className="flex items-center gap-2 text-secondary-foreground/70">
-            <Coins size={14} /> {t('input.select_asset')}
+          <Label className="text-secondary-foreground/70 flex items-center gap-2">
+            <Coins size={14} /> {t("input.select_asset")}
           </Label>
           <Select value={asset} onValueChange={(val) => setAsset(val as Asset)}>
-            <SelectTrigger className="w-full bg-black/20 border-white/10">
-              <SelectValue placeholder={t('input.select_asset')} />
+            <SelectTrigger className="w-full border-white/10 bg-black/20">
+              <SelectValue placeholder={t("input.select_asset")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="BTC">{t('assets.BTC')}</SelectItem>
-              <SelectItem value="Gold">{t('assets.Gold')}</SelectItem>
-              <SelectItem value="Silver">{t('assets.Silver')}</SelectItem>
+              <SelectItem value="BTC">{t("assets.BTC")}</SelectItem>
+              <SelectItem value="Gold">{t("assets.Gold")}</SelectItem>
+              <SelectItem value="Silver">{t("assets.Silver")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="space-y-2">
-          <Label className="flex items-center gap-2 text-secondary-foreground/70">
-            <DollarSign size={14} /> {t('input.investment_amount')}
+          <Label className="text-secondary-foreground/70 flex items-center gap-2">
+            <DollarSign size={14} /> {t("input.investment_amount")}
           </Label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+            <span className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2">
+              $
+            </span>
             <Input
               type="number"
               value={amount}
               onChange={(e) => setAmount(Number(e.target.value))}
               min="1"
-              className="pl-7 bg-black/20 border-white/10"
+              className="border-white/10 bg-black/20 pl-7"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label className="flex items-center gap-2 text-secondary-foreground/70">
-            <RefreshCw size={14} /> {t('input.frequency')}
+          <Label className="text-secondary-foreground/70 flex items-center gap-2">
+            <RefreshCw size={14} /> {t("input.frequency")}
           </Label>
-          <Select value={frequency} onValueChange={(val) => setFrequency(val as Frequency)}>
-            <SelectTrigger className="w-full bg-black/20 border-white/10">
-              <SelectValue placeholder={t('input.frequency')} />
+          <Select
+            value={frequency}
+            onValueChange={(val) => setFrequency(val as Frequency)}
+          >
+            <SelectTrigger className="w-full border-white/10 bg-black/20">
+              <SelectValue placeholder={t("input.frequency")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="daily">{t('input.frequencies.daily')}</SelectItem>
-              <SelectItem value="weekly">{t('input.frequencies.weekly')}</SelectItem>
-              <SelectItem value="monthly">{t('input.frequencies.monthly')}</SelectItem>
+              <SelectItem value="daily">
+                {t("input.frequencies.daily")}
+              </SelectItem>
+              <SelectItem value="weekly">
+                {t("input.frequencies.weekly")}
+              </SelectItem>
+              <SelectItem value="monthly">
+                {t("input.frequencies.monthly")}
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="grid grid-cols-1 gap-4">
           <div className="space-y-2">
-            <Label className="flex items-center gap-2 text-secondary-foreground/70">
-              <CalendarIcon size={14} /> {t('input.start_date')}
+            <Label className="text-secondary-foreground/70 flex items-center gap-2">
+              <CalendarIcon size={14} /> {t("input.start_date")}
             </Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-full justify-start text-left font-normal bg-black/20 border-white/10 hover:bg-black/30",
-                    !startD && "text-muted-foreground"
+                    "w-full justify-start border-white/10 bg-black/20 text-left font-normal hover:bg-black/30",
+                    !startD && "text-muted-foreground",
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {startD ? format(startD, "PPP") : <span>{t('input.pick_date')}</span>}
+                  {startD ? (
+                    format(startD, "PPP")
+                  ) : (
+                    <span>{t("input.pick_date")}</span>
+                  )}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 border-white/10" align="start">
+              <PopoverContent
+                className="w-auto border-white/10 p-0"
+                align="start"
+              >
                 <Calendar
                   mode="single"
                   selected={startD}
@@ -147,23 +170,30 @@ export function InputForm({
           </div>
 
           <div className="space-y-2">
-            <Label className="flex items-center gap-2 text-secondary-foreground/70">
-              <CalendarIcon size={14} /> {t('input.end_date')}
+            <Label className="text-secondary-foreground/70 flex items-center gap-2">
+              <CalendarIcon size={14} /> {t("input.end_date")}
             </Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-full justify-start text-left font-normal bg-black/20 border-white/10 hover:bg-black/30",
-                    !endD && "text-muted-foreground"
+                    "w-full justify-start border-white/10 bg-black/20 text-left font-normal hover:bg-black/30",
+                    !endD && "text-muted-foreground",
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {endD ? format(endD, "PPP") : <span>{t('input.pick_date')}</span>}
+                  {endD ? (
+                    format(endD, "PPP")
+                  ) : (
+                    <span>{t("input.pick_date")}</span>
+                  )}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 border-white/10" align="start">
+              <PopoverContent
+                className="w-auto border-white/10 p-0"
+                align="start"
+              >
                 <Calendar
                   mode="single"
                   selected={endD}
@@ -182,12 +212,12 @@ export function InputForm({
           </div>
         </div>
 
-        <Button 
-          className="w-full bg-asset-gradient text-black font-bold hover:opacity-90 transition-all transform hover:-translate-y-0.5"
+        <Button
+          className="bg-asset-gradient w-full transform font-bold text-black transition-all hover:-translate-y-0.5 hover:opacity-90"
           onClick={onCalculate}
           disabled={isLoading}
         >
-          {isLoading ? t('input.loading') : t('input.calculate_btn')}
+          {isLoading ? t("input.loading") : t("input.calculate_btn")}
         </Button>
       </CardContent>
     </Card>

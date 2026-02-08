@@ -20,21 +20,21 @@ export function SEO({ asset }: SEOProps) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": title,
-    "description": description,
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Web",
-    "offers": {
+    name: title,
+    description: description,
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "Web",
+    offers: {
       "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
+      price: "0",
+      priceCurrency: "USD",
     },
-    "featureList": [
+    featureList: [
       "Dollar Cost Averaging calculation",
       "Historical price data",
       "Multi-asset support (Bitcoin, Gold, Silver)",
-      "Interactive charts"
-    ]
+      "Interactive charts",
+    ],
   };
 
   return (
@@ -45,11 +45,11 @@ export function SEO({ asset }: SEOProps) {
 
       {/* hreflang tags for all supported languages */}
       {Object.keys(LANGUAGES).map((l) => (
-        <link 
-          key={l} 
-          rel="alternate" 
-          hrefLang={l} 
-          href={`${baseUrl}?lng=${l}`} 
+        <link
+          key={l}
+          rel="alternate"
+          hrefLang={l}
+          href={`${baseUrl}?lng=${l}`}
         />
       ))}
       <link rel="alternate" hrefLang="x-default" href={baseUrl} />

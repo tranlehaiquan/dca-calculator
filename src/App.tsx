@@ -45,37 +45,37 @@ function App() {
       className={`min-h-screen bg-[#0f111a] text-white selection:bg-[var(--asset-primary)] selection:text-black asset-${asset.toLowerCase()}`}
     >
       <SEO asset={asset} />
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex justify-end mb-4">
+      <div className="mx-auto max-w-7xl px-4 py-12">
+        <div className="mb-4 flex justify-end">
           <LanguageSwitcher />
         </div>
-        
-        <header className="text-center mb-16 space-y-4">
-          <div className="flex justify-center mb-6 transition-transform hover:scale-110 duration-300">
+
+        <header className="mb-16 space-y-4 text-center">
+          <div className="mb-6 flex justify-center transition-transform duration-300 hover:scale-110">
             {renderLogo()}
           </div>
-          <h1 className="text-5xl md:text-6xl font-black tracking-tight">
+          <h1 className="text-5xl font-black tracking-tight md:text-6xl">
             <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
               {t(`assets.${asset}`)}
             </span>{" "}
             <span className="bg-asset-gradient bg-clip-text text-transparent">
-               DCA
+              DCA
             </span>{" "}
-             Calculator
+            Calculator
           </h1>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto font-medium">
-            {t('app.subtitle')}
+          <p className="mx-auto max-w-2xl text-xl font-medium text-slate-400">
+            {t("app.subtitle")}
           </p>
         </header>
 
         <main>
           {error && (
-            <div className="bg-red-500/10 border border-red-500 text-red-500 px-6 py-4 rounded-xl mb-8 text-center font-semibold backdrop-blur-md">
+            <div className="mb-8 rounded-xl border border-red-500 bg-red-500/10 px-6 py-4 text-center font-semibold text-red-500 backdrop-blur-md">
               {error}
             </div>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             <aside className="lg:col-span-4">
               <InputForm
                 asset={asset}
@@ -93,23 +93,23 @@ function App() {
               />
             </aside>
 
-            <section className="lg:col-span-8 space-y-8">
+            <section className="space-y-8 lg:col-span-8">
               {result ? (
                 <>
                   <ResultsDashboard result={result} asset={asset} />
                   <Chart data={result.history} asset={asset} />
                 </>
               ) : (
-                <div className="h-full min-h-[400px] flex items-center justify-center border-2 border-dashed border-white/5 rounded-3xl bg-white/2 backdrop-blur-sm">
-                  <div className="text-center space-y-4 p-8">
-                    <div className="inline-block p-4 rounded-full bg-white/5 mb-4">
+                <div className="flex h-full min-h-[400px] items-center justify-center rounded-3xl border-2 border-dashed border-white/5 bg-white/2 backdrop-blur-sm">
+                  <div className="space-y-4 p-8 text-center">
+                    <div className="mb-4 inline-block rounded-full bg-white/5 p-4">
                       <Coins size={32} className="text-slate-500" />
                     </div>
                     <h3 className="text-2xl font-bold text-slate-300">
-                      {t('ready_state.title')}
+                      {t("ready_state.title")}
                     </h3>
-                    <p className="text-slate-500 max-w-xs mx-auto">
-                      {t('ready_state.description')}
+                    <p className="mx-auto max-w-xs text-slate-500">
+                      {t("ready_state.description")}
                     </p>
                   </div>
                 </div>
@@ -118,9 +118,12 @@ function App() {
           </div>
         </main>
 
-        <footer className="mt-20 pt-8 border-t border-white/5 text-center text-slate-500 text-sm">
+        <footer className="mt-20 border-t border-white/5 pt-8 text-center text-sm text-slate-500">
           <p>
-            {t('app.footer', { year: new Date().getFullYear(), asset: assetLabel })}
+            {t("app.footer", {
+              year: new Date().getFullYear(),
+              asset: assetLabel,
+            })}
           </p>
         </footer>
       </div>
