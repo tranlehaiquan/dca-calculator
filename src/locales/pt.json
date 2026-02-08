@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "Calculadora DCA",
+    "subtitle": "Visualize a sua acumulação de riqueza a longo prazo através da estratégia de Custo Médio em Dólares (DCA).",
+    "footer": "© {{year}} Calculadora DCA de {{asset}}. Criada para visionários a longo prazo."
+  },
+  "input": {
+    "title": "Parâmetros de Investimento",
+    "select_asset": "Selecionar Ativo",
+    "investment_amount": "Valor do Investimento",
+    "frequency": "Frequência",
+    "start_date": "Data de Início",
+    "end_date": "Data de Fim",
+    "pick_date": "Escolha uma data",
+    "frequencies": {
+      "daily": "Diariamente",
+      "weekly": "Semanalmente",
+      "monthly": "Mensalmente"
+    },
+    "calculate_btn": "Calcular Retornos",
+    "loading": "A carregar dados..."
+  },
+  "results": {
+    "total_invested": "Total Investido",
+    "value_in": "Valor em {{asset}}",
+    "current_value": "Valor Atual",
+    "total_change": "Variação Total"
+  },
+  "chart": {
+    "title": "Desempenho do Portfólio",
+    "show_price": "Mostrar Preço de {{asset}}",
+    "tooltip": {
+      "total_invested": "Total Investido",
+      "portfolio_value": "Valor do Portfólio",
+      "price": "Preço de {{asset}}"
+    }
+  },
+  "assets": {
+    "BTC": "Bitcoin",
+    "Gold": "Ouro",
+    "Silver": "Prata"
+  },
+  "ready_state": {
+    "title": "Pronto para calcular?",
+    "description": "Ajuste os parâmetros à esquerda e clique em \"Calcular Retornos\" para ver a sua projeção personalizada."
+  },
+  "error": {
+    "load_failed": "Falha ao carregar o histórico de preços de {{asset}}."
+  }
+}

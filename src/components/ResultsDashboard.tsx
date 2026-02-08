@@ -3,6 +3,7 @@ import type { Asset } from '../constants';
 import type { InvestmentResult } from '../api';
 import { TrendingUp, TrendingDown, Wallet, Coins } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useTranslation } from "react-i18next";
 
 interface ResultsDashboardProps {
   result: InvestmentResult | null;
@@ -10,6 +11,7 @@ interface ResultsDashboardProps {
 }
 
 export function ResultsDashboard({ result, asset }: ResultsDashboardProps) {
+  const { t } = useTranslation();
   if (!result) return null;
 
   const isProfit = result.roi >= 0;
@@ -26,7 +28,7 @@ export function ResultsDashboard({ result, asset }: ResultsDashboardProps) {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
             <Wallet size={16} className="text-[var(--asset-primary)]" />
-            Total Invested
+            {t('results.total_invested')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -38,13 +40,13 @@ export function ResultsDashboard({ result, asset }: ResultsDashboardProps) {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
             <Coins size={16} className="text-[var(--asset-primary)]" />
-            Value in {config.label}
+            {t('results.value_in', { asset: t(`assets.${asset}`) })}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{result.totalUnits.toFixed(asset === 'BTC' ? 8 : 4)} {config.unit}</div>
           <p className="text-xs text-muted-foreground mt-1">
-            Current Value: {formatting.format(result.currentValue)}
+            {t('results.current_value')}: {formatting.format(result.currentValue)}
           </p>
         </CardContent>
       </Card>
@@ -53,7 +55,7 @@ export function ResultsDashboard({ result, asset }: ResultsDashboardProps) {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
             {isProfit ? <TrendingUp size={16} className="text-emerald-500" /> : <TrendingDown size={16} className="text-red-500" />}
-            Total Change
+            {t('results.total_change')}
           </CardTitle>
         </CardHeader>
         <CardContent>

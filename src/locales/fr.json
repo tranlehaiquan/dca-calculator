@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "Calculateur DCA",
+    "subtitle": "Visualisez votre accumulation de richesse à long terme grâce à l'investissement programmé (DCA).",
+    "footer": "© {{year}} Calculateur DCA {{asset}}. Conçu pour les visionnaires à long terme."
+  },
+  "input": {
+    "title": "Paramètres d'investissement",
+    "select_asset": "Sélectionner l'actif",
+    "investment_amount": "Montant de l'investissement",
+    "frequency": "Fréquence",
+    "start_date": "Date de début",
+    "end_date": "Date de fin",
+    "pick_date": "Choisir une date",
+    "frequencies": {
+      "daily": "Quotidienne",
+      "weekly": "Hebdomadaire",
+      "monthly": "Mensuelle"
+    },
+    "calculate_btn": "Calculer les rendements",
+    "loading": "Chargement des données..."
+  },
+  "results": {
+    "total_invested": "Total investi",
+    "value_in": "Valeur en {{asset}}",
+    "current_value": "Valeur actuelle",
+    "total_change": "Variation totale"
+  },
+  "chart": {
+    "title": "Performance du portefeuille",
+    "show_price": "Afficher le prix du {{asset}}",
+    "tooltip": {
+      "total_invested": "Total investi",
+      "portfolio_value": "Valeur du portefeuille",
+      "price": "Prix du {{asset}}"
+    }
+  },
+  "assets": {
+    "BTC": "Bitcoin",
+    "Gold": "Or",
+    "Silver": "Argent"
+  },
+  "ready_state": {
+    "title": "Prêt à calculer ?",
+    "description": "Ajustez les paramètres à gauche et cliquez sur \"Calculer les rendements\" pour voir votre projection personnalisée."
+  },
+  "error": {
+    "load_failed": "Échec du chargement de l'historique des prix de {{asset}}."
+  }
+}

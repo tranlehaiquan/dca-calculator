@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "Công cụ tính DCA",
+    "subtitle": "Trực quan hóa sự tích lũy tài sản dài hạn của bạn thông qua chiến lược Trung bình giá (DCA).",
+    "footer": "© {{year}} Công cụ tính DCA {{asset}}. Xây dựng cho những người có tầm nhìn dài hạn."
+  },
+  "input": {
+    "title": "Thông số đầu tư",
+    "select_asset": "Chọn tài sản",
+    "investment_amount": "Số tiền đầu tư",
+    "frequency": "Tần suất",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc",
+    "pick_date": "Chọn ngày",
+    "frequencies": {
+      "daily": "Hàng ngày",
+      "weekly": "Hàng tuần",
+      "monthly": "Hàng tháng"
+    },
+    "calculate_btn": "Tính toán lợi nhuận",
+    "loading": "Đang tải dữ liệu..."
+  },
+  "results": {
+    "total_invested": "Tổng vốn đầu tư",
+    "value_in": "Giá trị quy đổi {{asset}}",
+    "current_value": "Giá trị hiện tại",
+    "total_change": "Tổng thay đổi"
+  },
+  "chart": {
+    "title": "Hiệu suất danh mục",
+    "show_price": "Hiện giá {{asset}}",
+    "tooltip": {
+      "total_invested": "Tổng vốn đầu tư",
+      "portfolio_value": "Giá trị danh mục",
+      "price": "Giá {{asset}}"
+    }
+  },
+  "assets": {
+    "BTC": "Bitcoin",
+    "Gold": "Vàng",
+    "Silver": "Bạc"
+  },
+  "ready_state": {
+    "title": "Sẵn sàng tính toán?",
+    "description": "Điều chỉnh các thông số bên trái và nhấp vào \"Tính toán lợi nhuận\" để xem dự đoán cá nhân hóa của bạn."
+  },
+  "error": {
+    "load_failed": "Không thể tải lịch sử giá {{asset}}."
+  }
+}

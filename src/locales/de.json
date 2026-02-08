@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "DCA-Rechner",
+    "subtitle": "Visualisieren Sie Ihren langfristigen Vermögensaufbau durch strategischen Durchschnittskosteneffekt (DCA).",
+    "footer": "© {{year}} {{asset}} DCA-Rechner. Gebaut für langfristige Visionäre."
+  },
+  "input": {
+    "title": "Investitionsparameter",
+    "select_asset": "Asset auswählen",
+    "investment_amount": "Investitionsbetrag",
+    "frequency": "Häufigkeit",
+    "start_date": "Startdatum",
+    "end_date": "Enddatum",
+    "pick_date": "Datum wählen",
+    "frequencies": {
+      "daily": "Täglich",
+      "weekly": "Wöchentlich",
+      "monthly": "Monatlich"
+    },
+    "calculate_btn": "Rendite berechnen",
+    "loading": "Daten werden geladen..."
+  },
+  "results": {
+    "total_invested": "Investiert gesamt",
+    "value_in": "Wert in {{asset}}",
+    "current_value": "Aktueller Wert",
+    "total_change": "Gesamtänderung"
+  },
+  "chart": {
+    "title": "Portfolio-Performance",
+    "show_price": "{{asset}}-Preis anzeigen",
+    "tooltip": {
+      "total_invested": "Investiert gesamt",
+      "portfolio_value": "Portfoliowert",
+      "price": "{{asset}}-Preis"
+    }
+  },
+  "assets": {
+    "BTC": "Bitcoin",
+    "Gold": "Gold",
+    "Silver": "Silber"
+  },
+  "ready_state": {
+    "title": "Bereit zum Berechnen?",
+    "description": "Passen Sie die Parameter links an und klicken Sie auf \"Rendite berechnen\", um Ihre persönliche Prognose zu sehen."
+  },
+  "error": {
+    "load_failed": "Laden der {{asset}}-Preishistorie fehlgeschlagen."
+  }
+}

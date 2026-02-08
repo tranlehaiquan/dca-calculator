@@ -16,6 +16,7 @@ import type { InvestmentResult } from '../api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { useTranslation } from "react-i18next";
 
 interface ChartProps {
   data: InvestmentResult['history'];
@@ -23,6 +24,7 @@ interface ChartProps {
 }
 
 export function Chart({ data, asset }: ChartProps) {
+  const { t } = useTranslation();
   const [showPrice, setShowPrice] = useState(false);
 
   if (!data || data.length === 0) return null;
@@ -33,7 +35,7 @@ export function Chart({ data, asset }: ChartProps) {
   return (
     <Card className="bg-card/50 border-white/10 shadow-xl overflow-hidden">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-xl font-bold">Portfolio Performance</CardTitle>
+        <CardTitle className="text-xl font-bold">{t('chart.title')}</CardTitle>
         <div className="flex items-center space-x-2">
           <Checkbox 
             id="showPrice" 
@@ -44,7 +46,7 @@ export function Chart({ data, asset }: ChartProps) {
             htmlFor="showPrice" 
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-muted-foreground"
           >
-            Show {config.label} Price
+            {t('chart.show_price', { asset: t(`assets.${asset}`) })}
           </Label>
         </div>
       </CardHeader>
@@ -102,7 +104,14 @@ export function Chart({ data, asset }: ChartProps) {
                   backdropFilter: 'blur(8px)'
                 }}
                 formatter={(value: any, name?: string) => {
-                  return [`$${value?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, name || ''];
+                  let displayName = name || '';
+                  if (name === 'Total Invested') displayName = t('chart.tooltip.total_invested');
+                  if (name === 'Portfolio Value') displayName = t('chart.tooltip.portfolio_value');
+                  // We handle "BTC Price" dynamically below based on showPrice logic, 
+                  // but Recharts passes the name prop from the Area component.
+                  // Since we renamed the Area component dynamically, we can try to match it or pass translated props.
+                  // Let's rely on the props passed to Area.
+                  return [`$${value?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, displayName];
                 }}
                 labelFormatter={(label) => format(new Date(label), 'MMM d, yyyy')}
               />
@@ -114,7 +123,7 @@ export function Chart({ data, asset }: ChartProps) {
                 stroke="#94a3b8" 
                 fillOpacity={1} 
                 fill="url(#colorInvested)" 
-                name="Total Invested"
+                name={t('chart.tooltip.total_invested')}
                 strokeWidth={2}
               />
               <Area 
@@ -124,7 +133,7 @@ export function Chart({ data, asset }: ChartProps) {
                 stroke={mainColor} 
                 fillOpacity={1} 
                 fill="url(#colorValue)" 
-                name="Portfolio Value"
+                name={t('chart.tooltip.portfolio_value')}
                 strokeWidth={2}
               />
               {showPrice && (
@@ -135,7 +144,7 @@ export function Chart({ data, asset }: ChartProps) {
                   stroke="#10b981" 
                   fillOpacity={1} 
                   fill="url(#colorPrice)" 
-                  name={`${config.label} Price`}
+                  name={t('chart.tooltip.price', { asset: t(`assets.${asset}`) })}
                   strokeWidth={2}
                 />
               )}

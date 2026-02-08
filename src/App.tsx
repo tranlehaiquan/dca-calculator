@@ -3,9 +3,12 @@ import { ASSET_CONFIG } from "./constants";
 import { InputForm } from "./components/InputForm";
 import { ResultsDashboard } from "./components/ResultsDashboard";
 import { Chart } from "./components/Chart";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { Bitcoin, Coins, Gem } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t } = useTranslation();
   const {
     asset,
     setAsset,
@@ -41,22 +44,25 @@ function App() {
       className={`min-h-screen bg-[#0f111a] text-white selection:bg-[var(--asset-primary)] selection:text-black asset-${asset.toLowerCase()}`}
     >
       <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="flex justify-end mb-4">
+          <LanguageSwitcher />
+        </div>
+        
         <header className="text-center mb-16 space-y-4">
           <div className="flex justify-center mb-6 transition-transform hover:scale-110 duration-300">
             {renderLogo()}
           </div>
           <h1 className="text-5xl md:text-6xl font-black tracking-tight">
             <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-              {assetLabel}
+              {t(`assets.${asset}`)}
             </span>{" "}
             <span className="bg-asset-gradient bg-clip-text text-transparent">
-              DCA
+               DCA
             </span>{" "}
-            Calculator
+             Calculator
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto font-medium">
-            Visualize your long-term wealth accumulation through strategic
-            Dollar Cost Averaging.
+            {t('app.subtitle')}
           </p>
         </header>
 
@@ -98,11 +104,10 @@ function App() {
                       <Coins size={32} className="text-slate-500" />
                     </div>
                     <h3 className="text-2xl font-bold text-slate-300">
-                      Ready to calculate?
+                      {t('ready_state.title')}
                     </h3>
                     <p className="text-slate-500 max-w-xs mx-auto">
-                      Adjust the parameters on the left and click "Calculate
-                      Returns" to see your personalized projection.
+                      {t('ready_state.description')}
                     </p>
                   </div>
                 </div>
@@ -113,7 +118,7 @@ function App() {
 
         <footer className="mt-20 pt-8 border-t border-white/5 text-center text-slate-500 text-sm">
           <p>
-            © 2026 {assetLabel} DCA Calculator. Built for long-term visionaries.
+            {t('app.footer', { year: new Date().getFullYear(), asset: assetLabel })}
           </p>
         </footer>
       </div>

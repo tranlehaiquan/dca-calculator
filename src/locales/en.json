@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "DCA Calculator",
+    "subtitle": "Visualize your long-term wealth accumulation through strategic Dollar Cost Averaging.",
+    "footer": "© {{year}} {{asset}} DCA Calculator. Built for long-term visionaries."
+  },
+  "input": {
+    "title": "Investment Parameters",
+    "select_asset": "Select Asset",
+    "investment_amount": "Investment Amount",
+    "frequency": "Frequency",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "pick_date": "Pick a date",
+    "frequencies": {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly"
+    },
+    "calculate_btn": "Calculate Returns",
+    "loading": "Loading data..."
+  },
+  "results": {
+    "total_invested": "Total Invested",
+    "value_in": "Value in {{asset}}",
+    "current_value": "Current Value",
+    "total_change": "Total Change"
+  },
+  "chart": {
+    "title": "Portfolio Performance",
+    "show_price": "Show {{asset}} Price",
+    "tooltip": {
+      "total_invested": "Total Invested",
+      "portfolio_value": "Portfolio Value",
+      "price": "{{asset}} Price"
+    }
+  },
+  "assets": {
+    "BTC": "Bitcoin",
+    "Gold": "Gold",
+    "Silver": "Silver"
+  },
+  "ready_state": {
+    "title": "Ready to calculate?",
+    "description": "Adjust the parameters on the left and click \"Calculate Returns\" to see your personalized projection."
+  },
+  "error": {
+    "load_failed": "Failed to load {{asset}} price history."
+  }
+}

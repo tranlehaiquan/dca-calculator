@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "DCA 계산기",
+    "subtitle": "전략적 달러 코스트 평균법(DCA)을 통해 장기적인 부의 축적을 시각화하세요.",
+    "footer": "© {{year}} {{asset}} DCA 계산기. 장기적인 비전을 가진 분들을 위해 제작되었습니다."
+  },
+  "input": {
+    "title": "투자 매개변수",
+    "select_asset": "자산 선택",
+    "investment_amount": "투자 금액",
+    "frequency": "빈도",
+    "start_date": "시작 날짜",
+    "end_date": "종료 날짜",
+    "pick_date": "날짜 선택",
+    "frequencies": {
+      "daily": "매일",
+      "weekly": "매주",
+      "monthly": "매월"
+    },
+    "calculate_btn": "수익률 계산",
+    "loading": "데이터 로딩 중..."
+  },
+  "results": {
+    "total_invested": "총 투자액",
+    "value_in": "{{asset}} 가치",
+    "current_value": "현재 가치",
+    "total_change": "총 변동"
+  },
+  "chart": {
+    "title": "포트폴리오 성과",
+    "show_price": "{{asset}} 가격 표시",
+    "tooltip": {
+      "total_invested": "총 투자액",
+      "portfolio_value": "포트폴리오 가치",
+      "price": "{{asset}} 가격"
+    }
+  },
+  "assets": {
+    "BTC": "비트코인",
+    "Gold": "금",
+    "Silver": "은"
+  },
+  "ready_state": {
+    "title": "계산할 준비가 되셨나요?",
+    "description": "왼쪽의 매개변수를 조정하고 '수익률 계산'을 클릭하여 개인화된 예측을 확인하세요."
+  },
+  "error": {
+    "load_failed": "{{asset}} 가격 기록을 불러오는 데 실패했습니다."
+  }
+}

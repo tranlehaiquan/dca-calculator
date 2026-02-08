@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "DCA 计算器",
+    "subtitle": "通过战略性的平均成本法 (DCA) 直观展示您的长期财富积累。",
+    "footer": "© {{year}} {{asset}} DCA 计算器。专为长期愿景者打造。"
+  },
+  "input": {
+    "title": "投资参数",
+    "select_asset": "选择资产",
+    "investment_amount": "投资金额",
+    "frequency": "频率",
+    "start_date": "开始日期",
+    "end_date": "结束日期",
+    "pick_date": "选择日期",
+    "frequencies": {
+      "daily": "每天",
+      "weekly": "每周",
+      "monthly": "每月"
+    },
+    "calculate_btn": "计算回报",
+    "loading": "正在加载数据..."
+  },
+  "results": {
+    "total_invested": "总投资额",
+    "value_in": "{{asset}} 价值",
+    "current_value": "当前价值",
+    "total_change": "总变化"
+  },
+  "chart": {
+    "title": "投资组合表现",
+    "show_price": "显示 {{asset}} 价格",
+    "tooltip": {
+      "total_invested": "总投资额",
+      "portfolio_value": "投资组合价值",
+      "price": "{{asset}} 价格"
+    }
+  },
+  "assets": {
+    "BTC": "比特币",
+    "Gold": "黄金",
+    "Silver": "白银"
+  },
+  "ready_state": {
+    "title": "准备好计算了吗？",
+    "description": "调整左侧参数并点击“计算回报”以查看您的个性化预测。"
+  },
+  "error": {
+    "load_failed": "加载 {{asset}} 价格历史失败。"
+  }
+}

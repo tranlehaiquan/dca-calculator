@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "Calcolatore DCA",
+    "subtitle": "Visualizza il tuo accumulo di ricchezza a lungo termine attraverso la strategia del Dollar Cost Averaging (DCA).",
+    "footer": "© {{year}} Calcolatore DCA {{asset}}. Costruito per visionari a lungo termine."
+  },
+  "input": {
+    "title": "Parametri di Investimento",
+    "select_asset": "Seleziona Asset",
+    "investment_amount": "Importo Investimento",
+    "frequency": "Frequenza",
+    "start_date": "Data Inizio",
+    "end_date": "Data Fine",
+    "pick_date": "Scegli una data",
+    "frequencies": {
+      "daily": "Giornaliero",
+      "weekly": "Settimanale",
+      "monthly": "Mensile"
+    },
+    "calculate_btn": "Calcola Rendimenti",
+    "loading": "Caricamento dati..."
+  },
+  "results": {
+    "total_invested": "Totale Investito",
+    "value_in": "Valore in {{asset}}",
+    "current_value": "Valore Attuale",
+    "total_change": "Variazione Totale"
+  },
+  "chart": {
+    "title": "Performance del Portafoglio",
+    "show_price": "Mostra Prezzo {{asset}}",
+    "tooltip": {
+      "total_invested": "Totale Investito",
+      "portfolio_value": "Valore Portafoglio",
+      "price": "Prezzo {{asset}}"
+    }
+  },
+  "assets": {
+    "BTC": "Bitcoin",
+    "Gold": "Oro",
+    "Silver": "Argento"
+  },
+  "ready_state": {
+    "title": "Pronto a calcolare?",
+    "description": "Regola i parametri a sinistra e clicca su \"Calcola Rendimenti\" per vedere la tua proiezione personalizzata."
+  },
+  "error": {
+    "load_failed": "Caricamento cronologia prezzi {{asset}} fallito."
+  }
+}

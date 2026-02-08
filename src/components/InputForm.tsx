@@ -19,6 +19,7 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { format, parseISO } from "date-fns";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface InputFormProps {
   asset: Asset;
@@ -49,6 +50,7 @@ export function InputForm({
   onCalculate,
   isLoading
 }: InputFormProps) {
+  const { t } = useTranslation();
   const startD = startDate ? parseISO(startDate) : undefined;
   const endD = endDate ? parseISO(endDate) : undefined;
 
@@ -56,29 +58,29 @@ export function InputForm({
     <Card className="bg-card/50 backdrop-blur-xl border-white/10 shadow-2xl">
       <CardHeader>
         <CardTitle className="text-xl font-bold flex items-center gap-2">
-          Investment Parameters
+          {t('input.title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <Label className="flex items-center gap-2 text-secondary-foreground/70">
-            <Coins size={14} /> Select Asset
+            <Coins size={14} /> {t('input.select_asset')}
           </Label>
           <Select value={asset} onValueChange={(val) => setAsset(val as Asset)}>
             <SelectTrigger className="w-full bg-black/20 border-white/10">
-              <SelectValue placeholder="Select asset" />
+              <SelectValue placeholder={t('input.select_asset')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="BTC">Bitcoin (BTC)</SelectItem>
-              <SelectItem value="Gold">Gold (PAXG)</SelectItem>
-              <SelectItem value="Silver">Silver (KAG)</SelectItem>
+              <SelectItem value="BTC">{t('assets.BTC')}</SelectItem>
+              <SelectItem value="Gold">{t('assets.Gold')}</SelectItem>
+              <SelectItem value="Silver">{t('assets.Silver')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         <div className="space-y-2">
           <Label className="flex items-center gap-2 text-secondary-foreground/70">
-            <DollarSign size={14} /> Investment Amount
+            <DollarSign size={14} /> {t('input.investment_amount')}
           </Label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
@@ -94,16 +96,16 @@ export function InputForm({
 
         <div className="space-y-2">
           <Label className="flex items-center gap-2 text-secondary-foreground/70">
-            <RefreshCw size={14} /> Frequency
+            <RefreshCw size={14} /> {t('input.frequency')}
           </Label>
           <Select value={frequency} onValueChange={(val) => setFrequency(val as Frequency)}>
             <SelectTrigger className="w-full bg-black/20 border-white/10">
-              <SelectValue placeholder="Select frequency" />
+              <SelectValue placeholder={t('input.frequency')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="daily">Daily</SelectItem>
-              <SelectItem value="weekly">Weekly</SelectItem>
-              <SelectItem value="monthly">Monthly</SelectItem>
+              <SelectItem value="daily">{t('input.frequencies.daily')}</SelectItem>
+              <SelectItem value="weekly">{t('input.frequencies.weekly')}</SelectItem>
+              <SelectItem value="monthly">{t('input.frequencies.monthly')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -111,7 +113,7 @@ export function InputForm({
         <div className="grid grid-cols-1 gap-4">
           <div className="space-y-2">
             <Label className="flex items-center gap-2 text-secondary-foreground/70">
-              <CalendarIcon size={14} /> Start Date
+              <CalendarIcon size={14} /> {t('input.start_date')}
             </Label>
             <Popover>
               <PopoverTrigger asChild>
@@ -123,7 +125,7 @@ export function InputForm({
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {startD ? format(startD, "PPP") : <span>Pick a date</span>}
+                  {startD ? format(startD, "PPP") : <span>{t('input.pick_date')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 border-white/10" align="start">
@@ -146,7 +148,7 @@ export function InputForm({
 
           <div className="space-y-2">
             <Label className="flex items-center gap-2 text-secondary-foreground/70">
-              <CalendarIcon size={14} /> End Date
+              <CalendarIcon size={14} /> {t('input.end_date')}
             </Label>
             <Popover>
               <PopoverTrigger asChild>
@@ -158,7 +160,7 @@ export function InputForm({
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {endD ? format(endD, "PPP") : <span>Pick a date</span>}
+                  {endD ? format(endD, "PPP") : <span>{t('input.pick_date')}</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 border-white/10" align="start">
@@ -185,7 +187,7 @@ export function InputForm({
           onClick={onCalculate}
           disabled={isLoading}
         >
-          {isLoading ? 'Loading data...' : 'Calculate Returns'}
+          {isLoading ? t('input.loading') : t('input.calculate_btn')}
         </Button>
       </CardContent>
     </Card>

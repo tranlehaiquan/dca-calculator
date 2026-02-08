@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "DCA計算機",
+    "subtitle": "戦略的なドルコスト平均法を通じて、長期的な資産形成を視覚化します。",
+    "footer": "© {{year}} {{asset}} DCA計算機。長期的なビジョナリーのために構築されました。"
+  },
+  "input": {
+    "title": "投資パラメータ",
+    "select_asset": "資産を選択",
+    "investment_amount": "投資額",
+    "frequency": "頻度",
+    "start_date": "開始日",
+    "end_date": "終了日",
+    "pick_date": "日付を選択",
+    "frequencies": {
+      "daily": "毎日",
+      "weekly": "毎週",
+      "monthly": "毎月"
+    },
+    "calculate_btn": "リターンを計算",
+    "loading": "データを読み込み中..."
+  },
+  "results": {
+    "total_invested": "総投資額",
+    "value_in": "{{asset}}での価値",
+    "current_value": "現在の価値",
+    "total_change": "総変動"
+  },
+  "chart": {
+    "title": "ポートフォリオのパフォーマンス",
+    "show_price": "{{asset}}価格を表示",
+    "tooltip": {
+      "total_invested": "総投資額",
+      "portfolio_value": "ポートフォリオ価値",
+      "price": "{{asset}}価格"
+    }
+  },
+  "assets": {
+    "BTC": "ビットコイン",
+    "Gold": "ゴールド",
+    "Silver": "シルバー"
+  },
+  "ready_state": {
+    "title": "計算の準備はできましたか？",
+    "description": "左側のパラメータを調整し、「リターンを計算」をクリックして、パーソナライズされた予測を確認してください。"
+  },
+  "error": {
+    "load_failed": "{{asset}}の価格履歴の読み込みに失敗しました。"
+  }
+}
