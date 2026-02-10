@@ -20,7 +20,9 @@
     "calculate_btn": "Tính toán lợi nhuận",
     "loading": "Đang tải dữ liệu...",
     "hide_form": "Ẩn thông số",
-    "show_form": "Hiện thông số"
+    "show_form": "Hiện thông số",
+    "share_btn": "Sao chép liên kết chia sẻ",
+    "share_success": "Đã sao chép liên kết vào bộ nhớ tạm!"
   },
   "results": {
     "total_invested": "Tổng vốn đầu tư",

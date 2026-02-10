@@ -20,7 +20,9 @@
     "calculate_btn": "Calculate Returns",
     "loading": "Loading data...",
     "hide_form": "Hide Form",
-    "show_form": "Show Form"
+    "show_form": "Show Form",
+    "share_btn": "Copy Share Link",
+    "share_success": "Link copied to clipboard!"
   },
   "results": {
     "total_invested": "Total Invested",

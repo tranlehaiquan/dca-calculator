@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# 🚀 Bitcoin DCA Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A professional, high-performance Dollar Cost Averaging (DCA) calculator for Bitcoin and other precious assets. Built with React, TypeScript, and Vite, featuring real-time data visualization and detailed investment analytics.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Multi-Asset Support**: Project your returns for Bitcoin (BTC), Gold, and Silver.
+- **Dynamic Visualization**: Interactive charts powered by Recharts to visualize portfolio growth vs. asset price.
+- **Detailed Analytics**: 
+  - Total Invested vs. Current Portfolio Value.
+  - Overall ROI and percentage change.
+  - Purchase metrics: Total buy count, average purchase price, best and worst buy prices.
+- **Comprehensive History**: A full breakdown of every transaction, including date, price, units acquired, and individual transaction ROI.
+- **Flexible Parameters**: 
+  - Custom investment amounts.
+  - Multiple frequencies (Daily, Weekly, Monthly).
+  - Manual date entry support (`YYYY-MM-DD`) or visual calendar picker.
+- **Localized Experience**: Multi-language support including English and Vietnamese.
+- **Optimized UI**: 
+  - Modern, dark-themed interface with glassmorphism effects.
+  - Collapsible sidebar for a focused, full-width viewing experience.
+  - Fully responsive design for mobile and desktop.
+- **Smart Caching**: API responses are cached locally to reduce network requests and improve performance.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: React 19 + Vite
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI + Shadcn UI
+- **Icons**: Lucide React
+- **Data Visualization**: Recharts
+- **Date Handling**: date-fns
+- **Internationalization**: i18next
+- **Data Sources**: Binance API & CoinGecko API
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+- Node.js (v18 or higher)
+- pnpm / npm / yarn
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/quantranlehai/btc-dca-calculator.git
+   cd btc-dca-calculator
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+3. Start the development server:
+   ```bash
+   pnpm dev
+   ```
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+4. Build for production:
+   ```bash
+   pnpm build
+   ```
+
+## 📄 License
+
+Built for long-term visionaries. Use it to visualize your journey to financial freedom.

@@ -1,5 +1,4 @@
-import type { Frequency, Asset } from "../constants";
-import { Calendar as CalendarIcon, DollarSign, RefreshCw, Coins } from "lucide-react";
+import { Calendar as CalendarIcon, DollarSign, RefreshCw, Coins, Share2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -19,6 +18,8 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { format, isValid, parse } from "date-fns";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import type { Asset, Frequency } from "@/constants";
 
 interface InputFormProps {
   asset: Asset;
@@ -50,9 +51,16 @@ export function InputForm({
   isLoading,
 }: InputFormProps) {
   const { t } = useTranslation();
+  const [showCopied, setShowCopied] = useState(false);
   
   const handleDateInput = (val: string, setter: (v: string) => void) => {
     setter(val);
+  };
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setShowCopied(true);
+    setTimeout(() => setShowCopied(false), 2000);
   };
 
   const getValidDate = (dateStr: string) => {
@@ -220,6 +228,15 @@ export function InputForm({
           disabled={isLoading}
         >
           {isLoading ? t("input.loading") : t("input.calculate_btn")}
+        </Button>
+
+        <Button
+          variant="outline"
+          className="w-full border-white/10 bg-black/20 hover:bg-black/40 text-sm flex items-center gap-2"
+          onClick={handleShare}
+        >
+          <Share2 size={14} />
+          {showCopied ? t("input.share_success") : t("input.share_btn")}
         </Button>
       </CardContent>
     </Card>
