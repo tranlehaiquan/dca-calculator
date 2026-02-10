@@ -42,6 +42,8 @@ export function InputForm({ dca }: InputFormProps) {
     loading: isLoading,
   } = dca;
 
+  const isComparison = (dca as any).isComparison;
+
   const { t } = useTranslation();
   const [showCopied, setShowCopied] = useState(false);
   
@@ -71,21 +73,23 @@ export function InputForm({ dca }: InputFormProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="space-y-2">
-          <Label className="text-secondary-foreground/70 flex items-center gap-2">
-            <Coins size={14} /> {t("input.select_asset")}
-          </Label>
-          <Select value={asset} onValueChange={(val) => setAsset(val as Asset)}>
-            <SelectTrigger className="w-full border-white/10 bg-black/20">
-              <SelectValue placeholder={t("input.select_asset")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="BTC">{t("assets.BTC")}</SelectItem>
-              <SelectItem value="Gold">{t("assets.Gold")}</SelectItem>
-              <SelectItem value="Silver">{t("assets.Silver")}</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        {!isComparison && (
+          <div className="space-y-2">
+            <Label className="text-secondary-foreground/70 flex items-center gap-2">
+              <Coins size={14} /> {t("input.select_asset")}
+            </Label>
+            <Select value={asset} onValueChange={(val) => setAsset(val as Asset)}>
+              <SelectTrigger className="w-full border-white/10 bg-black/20">
+                <SelectValue placeholder={t("input.select_asset")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="BTC">{t("assets.BTC")}</SelectItem>
+                <SelectItem value="Gold">{t("assets.Gold")}</SelectItem>
+                <SelectItem value="Silver">{t("assets.Silver")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         <div className="space-y-2">
           <Label className="text-secondary-foreground/70 flex items-center gap-2">

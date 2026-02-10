@@ -64,6 +64,19 @@
     "title": "Ready to calculate?",
     "description": "Adjust the parameters on the left and click \"Calculate Returns\" to see your personalized projection."
   },
+  "comparison": {
+    "title": "Asset Comparison",
+    "chart_title": "Portfolio Value Comparison",
+    "table": {
+      "asset": "Asset",
+      "invested": "Total Invested",
+      "value": "Final Value",
+      "roi": "ROI",
+      "units": "Units Accumulated"
+    },
+    "nav_calculator": "Calculator",
+    "nav_comparison": "Compare Assets"
+  },
   "error": {
     "load_failed": "Failed to load {{asset}} price history."
   }
