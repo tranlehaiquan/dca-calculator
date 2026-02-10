@@ -1,10 +1,5 @@
 import type { Frequency, Asset } from "../constants";
-import {
-  Calendar as CalendarIcon,
-  DollarSign,
-  RefreshCw,
-  Coins,
-} from "lucide-react";
+import { Calendar as CalendarIcon, DollarSign, RefreshCw, Coins } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -22,8 +17,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { format, parseISO } from "date-fns";
-import { cn } from "@/lib/utils";
+import { format, isValid, parse } from "date-fns";
 import { useTranslation } from "react-i18next";
 
 interface InputFormProps {
@@ -56,8 +50,18 @@ export function InputForm({
   isLoading,
 }: InputFormProps) {
   const { t } = useTranslation();
-  const startD = startDate ? parseISO(startDate) : undefined;
-  const endD = endDate ? parseISO(endDate) : undefined;
+  
+  const handleDateInput = (val: string, setter: (v: string) => void) => {
+    setter(val);
+  };
+
+  const getValidDate = (dateStr: string) => {
+    const parsed = parse(dateStr, "yyyy-MM-dd", new Date());
+    return isValid(parsed) ? parsed : undefined;
+  };
+
+  const startD = getValidDate(startDate);
+  const endD = getValidDate(endDate);
 
   return (
     <Card className="bg-card/50 border-white/10 shadow-2xl backdrop-blur-xl">
@@ -131,84 +135,82 @@ export function InputForm({
             <Label className="text-secondary-foreground/70 flex items-center gap-2">
               <CalendarIcon size={14} /> {t("input.start_date")}
             </Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-full justify-start border-white/10 bg-black/20 text-left font-normal hover:bg-black/30",
-                    !startD && "text-muted-foreground",
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {startD ? (
-                    format(startD, "PPP")
-                  ) : (
-                    <span>{t("input.pick_date")}</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                className="w-auto border-white/10 p-0"
-                align="start"
-              >
-                <Calendar
-                  mode="single"
-                  selected={startD}
-                  onSelect={(date) => {
-                    if (date) {
-                      setStartDate(format(date, "yyyy-MM-dd"));
+            <div className="relative">
+              <Input
+                type="text"
+                value={startDate}
+                onChange={(e) => handleDateInput(e.target.value, setStartDate)}
+                placeholder="YYYY-MM-DD"
+                className="border-white/10 bg-black/20 pr-10"
+              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-white"
+                  >
+                    <CalendarIcon className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto border-white/10 p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={startD}
+                    onSelect={(date) => {
+                      if (date) {
+                        setStartDate(format(date, "yyyy-MM-dd"));
+                      }
+                    }}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
                     }
-                  }}
-                  disabled={(date) =>
-                    date > new Date() || date < new Date("1900-01-01")
-                  }
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
 
           <div className="space-y-2">
             <Label className="text-secondary-foreground/70 flex items-center gap-2">
               <CalendarIcon size={14} /> {t("input.end_date")}
             </Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-full justify-start border-white/10 bg-black/20 text-left font-normal hover:bg-black/30",
-                    !endD && "text-muted-foreground",
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {endD ? (
-                    format(endD, "PPP")
-                  ) : (
-                    <span>{t("input.pick_date")}</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent
-                className="w-auto border-white/10 p-0"
-                align="start"
-              >
-                <Calendar
-                  mode="single"
-                  selected={endD}
-                  onSelect={(date) => {
-                    if (date) {
-                      setEndDate(format(date, "yyyy-MM-dd"));
+            <div className="relative">
+              <Input
+                type="text"
+                value={endDate}
+                onChange={(e) => handleDateInput(e.target.value, setEndDate)}
+                placeholder="YYYY-MM-DD"
+                className="border-white/10 bg-black/20 pr-10"
+              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-white"
+                  >
+                    <CalendarIcon className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto border-white/10 p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={endD}
+                    onSelect={(date) => {
+                      if (date) {
+                        setEndDate(format(date, "yyyy-MM-dd"));
+                      }
+                    }}
+                    disabled={(date) =>
+                      date > new Date() || (startD ? date < startD : false)
                     }
-                  }}
-                  disabled={(date) =>
-                    date > new Date() || (startD ? date < startD : false)
-                  }
-                  initialFocus
-                />
-              </PopoverContent>
-            </Popover>
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
         </div>
 
