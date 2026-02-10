@@ -6,10 +6,11 @@ import { ASSET_CONFIG } from "../constants";
 
 interface TransactionHistoryProps {
   transactions: InvestmentResult["transactions"];
+  currentPrice: number;
   asset: Asset;
 }
 
-export function TransactionHistory({ transactions, asset }: TransactionHistoryProps) {
+export function TransactionHistory({ transactions, currentPrice, asset }: TransactionHistoryProps) {
   const { t } = useTranslation();
   const config = ASSET_CONFIG[asset];
   
@@ -32,19 +33,31 @@ export function TransactionHistory({ transactions, asset }: TransactionHistoryPr
                 <th className="pb-3 font-medium text-muted-foreground">{t("transactions.amount")}</th>
                 <th className="pb-3 font-medium text-muted-foreground">{t("transactions.price")}</th>
                 <th className="pb-3 font-medium text-muted-foreground">{t("transactions.units")}</th>
+                <th className="pb-3 font-medium text-muted-foreground">{t("transactions.current_value")}</th>
+                <th className="pb-3 font-medium text-muted-foreground text-right">{t("transactions.roi")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              {transactions.slice().reverse().map((tx, idx) => (
-                <tr key={idx} className="hover:bg-white/5 transition-colors">
-                  <td className="py-3 font-mono">{tx.date}</td>
-                  <td className="py-3">{formatting.format(tx.amount)}</td>
-                  <td className="py-3">{formatting.format(tx.price)}</td>
-                  <td className="py-3 font-mono">
-                    {tx.units.toFixed(asset === "BTC" ? 8 : 4)} {config.unit}
-                  </td>
-                </tr>
-              ))}
+              {transactions.slice().reverse().map((tx, idx) => {
+                const txValue = tx.units * currentPrice;
+                const txRoi = ((currentPrice - tx.price) / tx.price) * 100;
+                const isProfit = txRoi >= 0;
+
+                return (
+                  <tr key={idx} className="hover:bg-white/5 transition-colors">
+                    <td className="py-3 font-mono">{tx.date}</td>
+                    <td className="py-3">{formatting.format(tx.amount)}</td>
+                    <td className="py-3">{formatting.format(tx.price)}</td>
+                    <td className="py-3 font-mono text-xs">
+                      {tx.units.toFixed(asset === "BTC" ? 8 : 4)} {config.unit}
+                    </td>
+                    <td className="py-3 font-medium">{formatting.format(txValue)}</td>
+                    <td className={`py-3 text-right font-bold ${isProfit ? "text-emerald-500" : "text-red-500"}`}>
+                      {isProfit ? "+" : ""}{txRoi.toFixed(2)}%
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

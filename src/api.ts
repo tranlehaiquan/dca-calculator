@@ -25,6 +25,7 @@ export interface InvestmentResult {
   bestPrice: number;
   worstPrice: number;
   purchaseCount: number;
+  currentPrice: number;
   history: {
     date: string;
     invested: number;
@@ -168,6 +169,7 @@ export function calculateDCA(
     bestPrice: buyPrices.length > 0 ? Math.min(...buyPrices) : 0,
     worstPrice: buyPrices.length > 0 ? Math.max(...buyPrices) : 0,
     purchaseCount: transactions.length,
+    currentPrice: currentPrice,
     history,
     transactions,
   };

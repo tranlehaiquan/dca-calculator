@@ -31,7 +31,9 @@
     "date": "Ngày",
     "amount": "Số tiền",
     "price": "Giá",
-    "units": "Số lượng"
+    "units": "Số lượng",
+    "roi": "Lợi nhuận",
+    "current_value": "Giá trị"
   },
   "report": {
     "purchase_count": "Tổng số lần mua",

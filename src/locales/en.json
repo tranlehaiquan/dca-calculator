@@ -31,7 +31,9 @@
     "date": "Date",
     "amount": "Amount",
     "price": "Price",
-    "units": "Units"
+    "units": "Units",
+    "roi": "ROI",
+    "current_value": "Value"
   },
   "report": {
     "purchase_count": "Total Purchases",
