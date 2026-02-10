@@ -14,25 +14,10 @@ import { Button } from "./components/ui/button";
 function App() {
   const { t } = useTranslation();
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-  const {
-    asset,
-    setAsset,
-    amount,
-    setAmount,
-    frequency,
-    setFrequency,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    result,
-    loading,
-    error,
-    calculate,
-  } = useDcaCalculator();
+  const dca = useDcaCalculator();
 
   const renderLogo = () => {
-    switch (asset) {
+    switch (dca.asset) {
       case "BTC":
         return <Bitcoin size={64} className="text-[var(--btc-color)]" />;
       case "Gold":
@@ -42,13 +27,13 @@ function App() {
     }
   };
 
-  const assetLabel = ASSET_CONFIG[asset].label;
+  const assetLabel = ASSET_CONFIG[dca.asset].label;
 
   return (
     <div
-      className={`min-h-screen bg-[#0f111a] text-white selection:bg-[var(--asset-primary)] selection:text-black asset-${asset.toLowerCase()}`}
+      className={`min-h-screen bg-[#0f111a] text-white selection:bg-[var(--asset-primary)] selection:text-black asset-${dca.asset.toLowerCase()}`}
     >
-      <SEO asset={asset} />
+      <SEO asset={dca.asset} />
       <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="mb-4 flex justify-end">
           <LanguageSwitcher />
@@ -60,7 +45,7 @@ function App() {
           </div>
           <h1 className="text-5xl font-black tracking-tight md:text-6xl">
             <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-              {t(`assets.${asset}`)}
+              {t(`assets.${dca.asset}`)}
             </span>{" "}
             <span className="bg-asset-gradient bg-clip-text text-transparent">
               DCA
@@ -73,9 +58,9 @@ function App() {
         </header>
 
         <main>
-          {error && (
+          {dca.error && (
             <div className="mb-8 rounded-xl border border-red-500 bg-red-500/10 px-6 py-4 text-center font-semibold text-red-500 backdrop-blur-md">
-              {error}
+              {dca.error}
             </div>
           )}
 
@@ -94,32 +79,19 @@ function App() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             {isSidebarVisible && (
               <aside className="lg:col-span-4">
-                <InputForm
-                  asset={asset}
-                  setAsset={setAsset}
-                  amount={amount}
-                  setAmount={setAmount}
-                  frequency={frequency}
-                  setFrequency={setFrequency}
-                  startDate={startDate}
-                  setStartDate={setStartDate}
-                  endDate={endDate}
-                  setEndDate={setEndDate}
-                  onCalculate={calculate}
-                  isLoading={loading}
-                />
+                <InputForm dca={dca} />
               </aside>
             )}
 
             <section className={`space-y-8 ${isSidebarVisible ? "lg:col-span-8" : "lg:col-span-12"}`}>
-              {result ? (
+              {dca.result ? (
                 <>
-                  <ResultsDashboard result={result} asset={asset} />
-                  <Chart data={result.history} asset={asset} />
+                  <ResultsDashboard result={dca.result} asset={dca.asset} />
+                  <Chart data={dca.result.history} asset={dca.asset} />
                   <TransactionHistory 
-                    transactions={result.transactions} 
-                    currentPrice={result.currentPrice} 
-                    asset={asset} 
+                    transactions={dca.result.transactions} 
+                    currentPrice={dca.result.currentPrice} 
+                    asset={dca.asset} 
                   />
                 </>
               ) : (

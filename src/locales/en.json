@@ -43,7 +43,8 @@
     "purchase_count": "Total Purchases",
     "average_price": "Average Buy Price",
     "best_price": "Best Buy Price",
-    "worst_price": "Worst Buy Price"
+    "worst_price": "Worst Buy Price",
+    "export_csv": "Export CSV Report"
   },
   "chart": {
     "title": "Portfolio Performance",

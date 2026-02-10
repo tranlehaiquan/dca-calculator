@@ -1,9 +1,11 @@
 import { ASSET_CONFIG } from "../constants";
 import type { Asset } from "../constants";
 import type { InvestmentResult } from "../api";
-import { TrendingUp, TrendingDown, Wallet, Coins, BarChart3, Calculator, ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+import { TrendingUp, TrendingDown, Wallet, Coins, BarChart3, Calculator, ArrowDownCircle, ArrowUpCircle, Download } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { exportToCSV } from "@/lib/exportUtils";
 
 interface ResultsDashboardProps {
   result: InvestmentResult;
@@ -23,6 +25,18 @@ export function ResultsDashboard({ result, asset }: ResultsDashboardProps) {
 
   return (
     <div className="space-y-6">
+      <div className="flex justify-end">
+        <Button
+          variant="outline"
+          size="sm"
+          className="border-white/10 bg-white/5 hover:bg-white/10 flex items-center gap-2"
+          onClick={() => exportToCSV(result, asset)}
+        >
+          <Download size={16} />
+          {t("report.export_csv")}
+        </Button>
+      </div>
+
       {/* Primary Metrics */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         <Card className="bg-card/50 border-white/10 transition-transform hover:-translate-y-1">

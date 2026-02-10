@@ -20,36 +20,28 @@ import { format, isValid, parse } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import type { Asset, Frequency } from "@/constants";
+import type { DcaCalculatorHook } from "@/hooks/useDcaCalculator";
 
 interface InputFormProps {
-  asset: Asset;
-  setAsset: (val: Asset) => void;
-  amount: number;
-  setAmount: (val: number) => void;
-  frequency: Frequency;
-  setFrequency: (val: Frequency) => void;
-  startDate: string;
-  setStartDate: (val: string) => void;
-  endDate: string;
-  setEndDate: (val: string) => void;
-  onCalculate: () => void;
-  isLoading: boolean;
+  dca: DcaCalculatorHook;
 }
 
-export function InputForm({
-  asset,
-  setAsset,
-  amount,
-  setAmount,
-  frequency,
-  setFrequency,
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate,
-  onCalculate,
-  isLoading,
-}: InputFormProps) {
+export function InputForm({ dca }: InputFormProps) {
+  const {
+    asset,
+    setAsset,
+    amount,
+    setAmount,
+    frequency,
+    setFrequency,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    calculate: onCalculate,
+    loading: isLoading,
+  } = dca;
+
   const { t } = useTranslation();
   const [showCopied, setShowCopied] = useState(false);
   
