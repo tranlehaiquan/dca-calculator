@@ -14,7 +14,7 @@ export function useComparisonCalculator() {
     setStartDate,
     endDate,
     setEndDate,
-  } = useDcaParams();
+  } = useDcaParams(false);
 
   const [results, setResults] = useState<Record<Asset, InvestmentResult | null>>({
     BTC: null,

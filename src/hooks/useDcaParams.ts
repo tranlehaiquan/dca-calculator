@@ -20,7 +20,7 @@ const getInitialParams = (): DcaParams => {
   };
 };
 
-export function useDcaParams() {
+export function useDcaParams(updateUrl = true) {
   const initialParams = getInitialParams();
 
   const [asset, setAsset] = useState<Asset>(initialParams.asset);
@@ -32,6 +32,8 @@ export function useDcaParams() {
   const isFirstRender = useRef(true);
 
   useEffect(() => {
+    if (!updateUrl) return;
+    
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
@@ -46,7 +48,7 @@ export function useDcaParams() {
 
     const newRelativePathQuery = window.location.pathname + "?" + params.toString();
     window.history.replaceState(null, "", newRelativePathQuery);
-  }, [asset, amount, frequency, startDate, endDate]);
+  }, [asset, amount, frequency, startDate, endDate, updateUrl]);
 
   return {
     asset,

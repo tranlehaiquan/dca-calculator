@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "vite-plugin-sitemap";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import path from "path";
 
 const langs = [
@@ -23,6 +24,7 @@ const dynamicRoutes = langs.map((lang) => `?lng=${lang}`);
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    TanStackRouterVite(),
     react(),
     tailwindcss(),
     sitemap({

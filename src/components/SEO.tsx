@@ -4,10 +4,10 @@ import { type Asset } from "../constants";
 import { LANGUAGES } from "../i18n";
 
 interface SEOProps {
-  asset: Asset;
+  asset?: Asset;
 }
 
-export function SEO({ asset }: SEOProps) {
+export function SEO({ asset = "BTC" }: SEOProps) {
   const { t, i18n } = useTranslation();
 
   const assetName = t(`assets.${asset}`);
