@@ -1,4 +1,11 @@
-import { Calendar as CalendarIcon, RefreshCw, Share2, Percent, Search, Loader2 } from "lucide-react";
+import {
+  Calendar as CalendarIcon,
+  RefreshCw,
+  Share2,
+  Percent,
+  Search,
+  Loader2,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -51,12 +58,15 @@ export function VnStockInputForm({ dca }: VnStockInputFormProps) {
   const [suggestions, setSuggestions] = useState<StockSuggestion[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const searchTimeoutRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setShowSuggestions(false);
       }
     };
@@ -91,7 +101,7 @@ export function VnStockInputForm({ dca }: VnStockInputFormProps) {
 
   const handleSymbolChange = (val: string) => {
     setTempSymbol(val);
-    
+
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
@@ -135,40 +145,54 @@ export function VnStockInputForm({ dca }: VnStockInputFormProps) {
               <Input
                 value={tempSymbol}
                 onChange={(e) => handleSymbolChange(e.target.value)}
-                onFocus={() => tempSymbol.length >= 2 && setShowSuggestions(true)}
+                onFocus={() =>
+                  tempSymbol.length >= 2 && setShowSuggestions(true)
+                }
                 placeholder={t("vn_stocks.symbol_placeholder")}
                 className="border-white/10 bg-black/20"
               />
               {isSearching && (
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <Loader2 size={14} className="animate-spin text-muted-foreground" />
+                <div className="absolute top-1/2 right-3 -translate-y-1/2">
+                  <Loader2
+                    size={14}
+                    className="text-muted-foreground animate-spin"
+                  />
                 </div>
               )}
-              
+
               {showSuggestions && (suggestions.length > 0 || isSearching) && (
-                <div className="absolute top-full left-0 z-50 mt-1 w-full rounded-md border border-white/10 bg-[#1a1a1a] shadow-xl overflow-hidden">
-                  <div className="max-h-60 overflow-y-auto p-1 scrollbar-thin scrollbar-thumb-white/10">
+                <div className="absolute top-full left-0 z-50 mt-1 w-full overflow-hidden rounded-md border border-white/10 bg-[#1a1a1a] shadow-xl">
+                  <div className="scrollbar-thin scrollbar-thumb-white/10 max-h-60 overflow-y-auto p-1">
                     {isSearching ? (
-                      <div className="px-3 py-2 text-sm text-muted-foreground flex items-center gap-2">
-                        <Loader2 size={12} className="animate-spin" /> {t("input.loading")}
+                      <div className="text-muted-foreground flex items-center gap-2 px-3 py-2 text-sm">
+                        <Loader2 size={12} className="animate-spin" />{" "}
+                        {t("input.loading")}
                       </div>
                     ) : suggestions.length === 0 ? (
-                      <div className="px-3 py-2 text-sm text-muted-foreground">
-                        {t("vn_stocks.no_results", { defaultValue: "No stocks found" })}
+                      <div className="text-muted-foreground px-3 py-2 text-sm">
+                        {t("vn_stocks.no_results", {
+                          defaultValue: "No stocks found",
+                        })}
                       </div>
                     ) : (
                       suggestions.map((s) => (
                         <button
                           key={s.symbol}
                           type="button"
-                          className="w-full text-left px-3 py-2 text-sm rounded-sm hover:bg-white/10 transition-colors group"
+                          className="group w-full rounded-sm px-3 py-2 text-left text-sm transition-colors hover:bg-white/10"
                           onClick={() => selectSuggestion(s)}
                         >
-                          <div className="flex justify-between items-center">
-                            <span className="font-bold text-white group-hover:text-primary transition-colors">{s.symbol}</span>
-                            <span className="text-[10px] bg-white/5 px-1 rounded uppercase opacity-50">{s.exchange}</span>
+                          <div className="flex items-center justify-between">
+                            <span className="group-hover:text-primary font-bold text-white transition-colors">
+                              {s.symbol}
+                            </span>
+                            <span className="rounded bg-white/5 px-1 text-[10px] uppercase opacity-50">
+                              {s.exchange}
+                            </span>
                           </div>
-                          <div className="text-xs text-muted-foreground truncate group-hover:text-white/80">{s.longname}</div>
+                          <div className="text-muted-foreground truncate text-xs group-hover:text-white/80">
+                            {s.longname}
+                          </div>
                         </button>
                       ))
                     )}
@@ -184,7 +208,8 @@ export function VnStockInputForm({ dca }: VnStockInputFormProps) {
 
         <div className="space-y-2">
           <Label className="text-secondary-foreground/70 flex items-center gap-2">
-            <span className="font-bold text-xs">₫</span> {t("input.investment_amount")}
+            <span className="text-xs font-bold">₫</span>{" "}
+            {t("input.investment_amount")}
           </Label>
           <div className="relative">
             <span className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2">
@@ -258,12 +283,15 @@ export function VnStockInputForm({ dca }: VnStockInputFormProps) {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-white"
+                    className="text-muted-foreground absolute top-0 right-0 h-full px-3 hover:text-white"
                   >
                     <CalendarIcon className="h-4 w-4" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto border-white/10 p-0" align="start">
+                <PopoverContent
+                  className="w-auto border-white/10 p-0"
+                  align="start"
+                >
                   <Calendar
                     mode="single"
                     selected={startD}
@@ -299,12 +327,15 @@ export function VnStockInputForm({ dca }: VnStockInputFormProps) {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute right-0 top-0 h-full px-3 text-muted-foreground hover:text-white"
+                    className="text-muted-foreground absolute top-0 right-0 h-full px-3 hover:text-white"
                   >
                     <CalendarIcon className="h-4 w-4" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto border-white/10 p-0" align="start">
+                <PopoverContent
+                  className="w-auto border-white/10 p-0"
+                  align="start"
+                >
                   <Calendar
                     mode="single"
                     selected={endD}
@@ -334,7 +365,7 @@ export function VnStockInputForm({ dca }: VnStockInputFormProps) {
 
         <Button
           variant="outline"
-          className="w-full border-white/10 bg-black/20 hover:bg-black/40 text-sm flex items-center gap-2"
+          className="flex w-full items-center gap-2 border-white/10 bg-black/20 text-sm hover:bg-black/40"
           onClick={handleShare}
         >
           <Share2 size={14} />
