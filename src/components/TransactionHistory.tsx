@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import type { InvestmentResult } from "../api";
@@ -13,7 +14,7 @@ interface TransactionHistoryProps {
   asset: Asset;
 }
 
-export function TransactionHistory({
+export const TransactionHistory = memo(function TransactionHistory({
   transactions,
   currentPrice,
   asset,
@@ -108,4 +109,4 @@ export function TransactionHistory({
       </Card>
     </>
   );
-}
+});

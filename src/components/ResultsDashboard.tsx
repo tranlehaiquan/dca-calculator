@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { ASSET_CONFIG } from "../constants";
 import type { Asset } from "../constants";
 import type { InvestmentResult } from "../api";
@@ -19,7 +20,10 @@ interface ResultsDashboardProps {
   asset: Asset;
 }
 
-export function ResultsDashboard({ result, asset }: ResultsDashboardProps) {
+export const ResultsDashboard = memo(function ResultsDashboard({
+  result,
+  asset,
+}: ResultsDashboardProps) {
   const { t } = useTranslation();
 
   const isProfit = result.roi >= 0;
@@ -138,4 +142,4 @@ export function ResultsDashboard({ result, asset }: ResultsDashboardProps) {
       </div>
     </div>
   );
-}
+});
