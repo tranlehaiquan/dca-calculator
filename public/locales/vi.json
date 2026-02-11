@@ -70,6 +70,25 @@
     "title": "Sẵn sàng tính toán?",
     "description": "Điều chỉnh các thông số bên trái và nhấp vào \"Tính toán lợi nhuận\" để xem dự đoán cá nhân hóa của bạn."
   },
+  "comparison": {
+    "title": "So sánh tài sản",
+    "chart_title": "So sánh giá trị danh mục",
+    "table": {
+      "asset": "Tài sản",
+      "invested": "Tổng vốn đầu tư",
+      "value": "Giá trị cuối cùng",
+      "roi": "ROI",
+      "units": "Số lượng tích lũy"
+    },
+    "nav_calculator": "Công cụ tính",
+    "nav_comparison": "So sánh",
+    "nav_vn_stocks": "Cổ phiếu VN"
+  },
+  "vn_stocks": {
+    "title": "DCA Cổ phiếu Việt Nam",
+    "symbol_placeholder": "Nhập mã cổ phiếu (VD: VNM, FPT...)",
+    "select_symbol": "Chọn mã cổ phiếu"
+  },
   "error": {
     "load_failed": "Không thể tải lịch sử giá {{asset}}."
   }

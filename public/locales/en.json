@@ -82,7 +82,13 @@
       "units": "Units Accumulated"
     },
     "nav_calculator": "Calculator",
-    "nav_comparison": "Compare Assets"
+    "nav_comparison": "Compare Assets",
+    "nav_vn_stocks": "VN Stocks"
+  },
+  "vn_stocks": {
+    "title": "Vietnamese Stock DCA",
+    "symbol_placeholder": "Enter stock symbol (e.g. VNM, FPT...)",
+    "select_symbol": "Select Stock"
   },
   "error": {
     "load_failed": "Failed to load {{asset}} price history."

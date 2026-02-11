@@ -93,6 +93,87 @@ export async function fetchPriceHistory(asset: Asset): Promise<PricePoint[]> {
   }
 }
 
+export async function fetchVnStockHistory(symbol: string): Promise<PricePoint[]> {
+  const CACHE_KEY = `vn_history_cache_${symbol}`;
+  const now = Math.floor(Date.now() / 1000);
+  const tenYearsAgo = now - 10 * 365 * 24 * 60 * 60;
+
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const { timestamp, data } = JSON.parse(cached);
+      if (Date.now() - timestamp < CACHE_DURATION) {
+        return data;
+      }
+    }
+
+    // Yahoo Finance often requires .VN or .HM for Vietnamese stocks
+    // Most common symbols are on HOSE (.VN) or HNX (.HN)
+    let yahooSymbol = symbol.toUpperCase();
+    if (!yahooSymbol.includes(".")) {
+      yahooSymbol = `${yahooSymbol}.VN`;
+    }
+
+    // Use relative path for Vercel/Production, fallback to localhost for local dev if needed
+    const proxyBaseUrl = "/api/yahoo";
+    
+    const fetchFromProxy = async (s: string) => {
+      // For local development without the backend running, you might need the full URL
+      // but relative path is best for Vercel and Docker-served frontend.
+      const baseUrl = typeof window !== 'undefined' && window.location.hostname === 'localhost' 
+        ? "http://localhost:3001/api/yahoo" 
+        : "/api/yahoo";
+        
+      const url = `${baseUrl}?symbol=${s}&period1=${tenYearsAgo}&period2=${now}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Proxy error: ${response.statusText}`);
+      return await response.json();
+    };
+
+    let json = await fetchFromProxy(yahooSymbol);
+    
+    if (json.chart.error) {
+      // Try with .HN if .VN fails
+      if (yahooSymbol.endsWith(".VN")) {
+        const hnSymbol = yahooSymbol.replace(".VN", ".HN");
+        try {
+          const hnJson = await fetchFromProxy(hnSymbol);
+          if (!hnJson.chart.error) {
+            return processYahooData(hnJson, CACHE_KEY);
+          }
+        } catch (e) {
+          console.error(`Error fetching .HN fallback:`, e);
+        }
+      }
+      throw new Error(json.chart.error.description || "Yahoo Finance error");
+    }
+    
+    return processYahooData(json, CACHE_KEY);
+  } catch (error) {
+    console.error(`API Error for VN Stock ${symbol}:`, error);
+    return [];
+  }
+}
+
+function processYahooData(json: any, cacheKey: string): PricePoint[] {
+  const result = json.chart.result[0];
+  const timestamps = result.timestamp;
+  const quotes = result.indicators.quote[0].close;
+
+  const prices: PricePoint[] = timestamps
+    .map((timestamp: number, index: number) => ({
+      date: timestamp * 1000,
+      price: quotes[index],
+    }))
+    .filter((p: PricePoint) => p.price !== null);
+
+  localStorage.setItem(
+    cacheKey,
+    JSON.stringify({ timestamp: Date.now(), data: prices }),
+  );
+  return prices;
+}
+
 export function calculateDCA(
   prices: PricePoint[],
   amount: number,

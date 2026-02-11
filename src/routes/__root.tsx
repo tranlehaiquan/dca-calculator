@@ -57,6 +57,22 @@ export const Route = createRootRoute({
                     </Button>
                   )}
                 </Link>
+                <Link
+                  to="/vn-stocks"
+                  activeProps={{ className: 'bg-white/10 text-white' }}
+                  inactiveProps={{ className: 'text-slate-400' }}
+                >
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "secondary" : "ghost"}
+                      size="sm"
+                      className="flex items-center gap-2"
+                    >
+                      <span className="font-bold text-xs">VN</span>
+                      {t("comparison.nav_vn_stocks")}
+                    </Button>
+                  )}
+                </Link>
               </div>
               <LanguageSwitcher />
             </div>
