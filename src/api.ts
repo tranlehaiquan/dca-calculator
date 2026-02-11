@@ -45,6 +45,37 @@ export interface InvestmentResult {
 
 const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
 
+async function fetchFromYahoo(symbol: string): Promise<PricePoint[]> {
+  const now = Math.floor(Date.now() / 1000);
+  const tenYearsAgo = now - 10 * 365 * 24 * 60 * 60;
+  
+  const baseUrl =
+    typeof window !== "undefined" &&
+    window.location.hostname === "localhost"
+      ? "http://localhost:3001/api/yahoo/history"
+      : "/api/yahoo/history";
+
+  const url = `${baseUrl}?symbol=${symbol}&period1=${tenYearsAgo}&period2=${now}`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Proxy error: ${response.statusText}`);
+  const json = await response.json();
+
+  if (json.chart.error) {
+    throw new Error(json.chart.error.description || "Yahoo Finance error");
+  }
+
+  const result = json.chart.result[0];
+  const timestamps = result.timestamp;
+  const quotes = result.indicators.quote[0].close;
+
+  return timestamps
+    .map((timestamp: number, index: number) => ({
+      date: timestamp * 1000,
+      price: quotes[index] as number,
+    }))
+    .filter((p: PricePoint) => p.price !== null);
+}
+
 export async function fetchPriceHistory(asset: Asset): Promise<PricePoint[]> {
   const config = ASSET_CONFIG[asset];
   const CACHE_KEY = `history_cache_${asset}`;
@@ -61,25 +92,46 @@ export async function fetchPriceHistory(asset: Asset): Promise<PricePoint[]> {
     let prices: PricePoint[] = [];
 
     if (config.source === "binance" && config.symbol) {
-      const response = await fetch(
-        `https://api.binance.com/api/v3/klines?symbol=${config.symbol}&interval=1d&limit=1000`,
-      );
-      if (!response.ok) throw new Error(response.statusText);
-      const json = (await response.json()) as (string | number)[][];
-      prices = json.map((kline) => ({
-        date: kline[0] as number,
-        price: parseFloat(kline[4] as string),
-      }));
+      try {
+        const response = await fetch(
+          `https://api.binance.com/api/v3/klines?symbol=${config.symbol}&interval=1d&limit=1000`,
+        );
+        if (!response.ok) throw new Error(response.statusText);
+        const json = (await response.json()) as (string | number)[][];
+        prices = json.map((kline) => ({
+          date: kline[0] as number,
+          price: parseFloat(kline[4] as string),
+        }));
+      } catch (e) {
+        console.warn(`Binance failed for ${asset}, falling back to Yahoo:`, e);
+        if (config.yahooSymbol) {
+          prices = await fetchFromYahoo(config.yahooSymbol);
+        } else {
+          throw e;
+        }
+      }
+    } else if (config.source === "yahoo" && config.yahooSymbol) {
+      prices = await fetchFromYahoo(config.yahooSymbol);
     } else {
-      const response = await fetch(
-        `https://api.coingecko.com/api/v3/coins/${config.id}/market_chart?vs_currency=usd&days=1000&interval=daily`,
-      );
-      if (!response.ok) throw new Error(response.statusText);
-      const json = await response.json();
-      prices = json.prices.map((p: [number, number]) => ({
-        date: p[0],
-        price: p[1],
-      }));
+      // Fallback for coingecko or if yahoo fails
+      try {
+        const response = await fetch(
+          `https://api.coingecko.com/api/v3/coins/${config.id}/market_chart?vs_currency=usd&days=1000&interval=daily`,
+        );
+        if (!response.ok) throw new Error(response.statusText);
+        const json = await response.json();
+        prices = json.prices.map((p: [number, number]) => ({
+          date: p[0],
+          price: p[1],
+        }));
+      } catch (e) {
+        console.warn(`CoinGecko failed for ${asset}, falling back to Yahoo if available:`, e);
+        if (config.yahooSymbol) {
+          prices = await fetchFromYahoo(config.yahooSymbol);
+        } else {
+          throw e;
+        }
+      }
     }
 
     localStorage.setItem(
@@ -97,8 +149,6 @@ export async function fetchVnStockHistory(
   symbol: string,
 ): Promise<PricePoint[]> {
   const CACHE_KEY = `vn_history_cache_${symbol}`;
-  const now = Math.floor(Date.now() / 1000);
-  const tenYearsAgo = now - 10 * 365 * 24 * 60 * 60;
 
   try {
     const cached = localStorage.getItem(CACHE_KEY);
@@ -110,46 +160,34 @@ export async function fetchVnStockHistory(
     }
 
     // Yahoo Finance often requires .VN or .HM for Vietnamese stocks
-    // Most common symbols are on HOSE (.VN) or HNX (.HN)
     let yahooSymbol = symbol.toUpperCase();
     if (!yahooSymbol.includes(".")) {
       yahooSymbol = `${yahooSymbol}.VN`;
     }
 
-    const fetchFromProxy = async (s: string) => {
-      // For local development without the backend running, you might need the full URL
-      // but relative path is best for Vercel and Docker-served frontend.
-      const baseUrl =
-        typeof window !== "undefined" &&
-        window.location.hostname === "localhost"
-          ? "http://localhost:3001/api/yahoo/history"
-          : "/api/yahoo/history";
-
-      const url = `${baseUrl}?symbol=${s}&period1=${tenYearsAgo}&period2=${now}`;
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`Proxy error: ${response.statusText}`);
-      return await response.json();
-    };
-
-    const json = await fetchFromProxy(yahooSymbol);
-
-    if (json.chart.error) {
+    let prices: PricePoint[] = [];
+    try {
+      prices = await fetchFromYahoo(yahooSymbol);
+    } catch (e) {
       // Try with .HN if .VN fails
       if (yahooSymbol.endsWith(".VN")) {
         const hnSymbol = yahooSymbol.replace(".VN", ".HN");
         try {
-          const hnJson = await fetchFromProxy(hnSymbol);
-          if (!hnJson.chart.error) {
-            return processYahooData(hnJson, CACHE_KEY);
-          }
-        } catch (e) {
-          console.error(`Error fetching .HN fallback:`, e);
+          prices = await fetchFromYahoo(hnSymbol);
+        } catch (hnError) {
+          console.error(`Error fetching .HN fallback:`, hnError);
+          throw e; // throw original .VN error if .HN also fails
         }
+      } else {
+        throw e;
       }
-      throw new Error(json.chart.error.description || "Yahoo Finance error");
     }
 
-    return processYahooData(json, CACHE_KEY);
+    localStorage.setItem(
+      CACHE_KEY,
+      JSON.stringify({ timestamp: Date.now(), data: prices }),
+    );
+    return prices;
   } catch (error) {
     console.error(`API Error for VN Stock ${symbol}:`, error);
     return [];
