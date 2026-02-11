@@ -48,10 +48,9 @@ const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
 async function fetchFromYahoo(symbol: string): Promise<PricePoint[]> {
   const now = Math.floor(Date.now() / 1000);
   const tenYearsAgo = now - 10 * 365 * 24 * 60 * 60;
-  
+
   const baseUrl =
-    typeof window !== "undefined" &&
-    window.location.hostname === "localhost"
+    typeof window !== "undefined" && window.location.hostname === "localhost"
       ? "http://localhost:3001/api/yahoo/history"
       : "/api/yahoo/history";
 
@@ -125,7 +124,10 @@ export async function fetchPriceHistory(asset: Asset): Promise<PricePoint[]> {
           price: p[1],
         }));
       } catch (e) {
-        console.warn(`CoinGecko failed for ${asset}, falling back to Yahoo if available:`, e);
+        console.warn(
+          `CoinGecko failed for ${asset}, falling back to Yahoo if available:`,
+          e,
+        );
         if (config.yahooSymbol) {
           prices = await fetchFromYahoo(config.yahooSymbol);
         } else {
@@ -213,8 +215,7 @@ export async function searchVnStock(query: string): Promise<StockSuggestion[]> {
 
   try {
     const baseUrl =
-      typeof window !== "undefined" &&
-      window.location.hostname === "localhost"
+      typeof window !== "undefined" && window.location.hostname === "localhost"
         ? "http://localhost:3001/api/yahoo/search"
         : "/api/yahoo/search";
 
@@ -258,7 +259,10 @@ interface YahooChartResult {
   };
 }
 
-function processYahooData(json: YahooChartResult, cacheKey: string): PricePoint[] {
+export function processYahooData(
+  json: YahooChartResult,
+  cacheKey: string,
+): PricePoint[] {
   const result = json.chart.result[0];
   const timestamps = result.timestamp;
   const quotes = result.indicators.quote[0].close;
