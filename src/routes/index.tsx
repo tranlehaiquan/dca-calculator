@@ -1,14 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { useDcaCalculator } from "../hooks/useDcaCalculator";
 import { InputForm } from "../components/InputForm";
 import { ResultsDashboard } from "../components/ResultsDashboard";
-import { Chart } from "../components/Chart";
 import { TransactionHistory } from "../components/TransactionHistory";
 import { SEO } from "../components/SEO";
 import { Bitcoin, Coins, Gem, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../components/ui/button";
+
+const Chart = lazy(() => import("../components/Chart").then(m => ({ default: m.Chart })));
 
 export const Route = createFileRoute('/')({
   component: HomeComponent,
@@ -81,7 +82,9 @@ function HomeComponent() {
             {dca.result ? (
               <>
                 <ResultsDashboard result={dca.result} asset={dca.asset} />
-                <Chart data={dca.result.history} asset={dca.asset} />
+                <Suspense fallback={<div className="h-[400px] w-full animate-pulse rounded-3xl bg-white/5" />}>
+                  <Chart data={dca.result.history} asset={dca.asset} />
+                </Suspense>
                 <TransactionHistory 
                   transactions={dca.result.transactions} 
                   currentPrice={dca.result.currentPrice} 

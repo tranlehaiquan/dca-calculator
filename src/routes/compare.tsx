@@ -1,7 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { ComparisonView } from '../components/ComparisonView';
+import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { SEO } from '../components/SEO';
+
+const ComparisonView = lazy(() => import("../components/ComparisonView").then(m => ({ default: m.ComparisonView })));
 
 export const Route = createFileRoute('/compare')({
   component: CompareComponent,
@@ -32,7 +34,9 @@ function CompareComponent() {
       </header>
 
       <main>
-        <ComparisonView />
+        <Suspense fallback={<div className="h-[600px] w-full animate-pulse rounded-3xl bg-white/5" />}>
+          <ComparisonView />
+        </Suspense>
       </main>
     </div>
   );
