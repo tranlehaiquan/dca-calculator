@@ -1,4 +1,4 @@
-import { Calendar as CalendarIcon, DollarSign, RefreshCw, Coins, Share2 } from "lucide-react";
+import { Calendar as CalendarIcon, DollarSign, RefreshCw, Coins, Share2, Percent } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -38,6 +38,8 @@ export function InputForm({ dca }: InputFormProps) {
     setStartDate,
     endDate,
     setEndDate,
+    inflationRate,
+    setInflationRate,
     calculate: onCalculate,
     loading: isLoading,
   } = dca;
@@ -107,6 +109,20 @@ export function InputForm({ dca }: InputFormProps) {
               className="border-white/10 bg-black/20 pl-7"
             />
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-secondary-foreground/70 flex items-center gap-2">
+            <Percent size={14} /> {t("input.inflation_rate")}
+          </Label>
+          <Input
+            type="number"
+            value={inflationRate}
+            onChange={(e) => setInflationRate(Number(e.target.value))}
+            min="0"
+            step="0.1"
+            className="border-white/10 bg-black/20"
+          />
         </div>
 
         <div className="space-y-2">

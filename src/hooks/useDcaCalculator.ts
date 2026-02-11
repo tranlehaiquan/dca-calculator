@@ -11,6 +11,7 @@ export interface DcaCalculatorHook {
   frequency: Frequency;
   startDate: string;
   endDate: string;
+  inflationRate: number;
   result: InvestmentResult | null;
   loading: boolean;
   error: string | null;
@@ -19,6 +20,7 @@ export interface DcaCalculatorHook {
   setFrequency: (frequency: Frequency) => void;
   setStartDate: (date: string) => void;
   setEndDate: (date: string) => void;
+  setInflationRate: (rate: number) => void;
   calculate: () => void;
 }
 
@@ -34,6 +36,8 @@ export function useDcaCalculator(): DcaCalculatorHook {
     setStartDate,
     endDate,
     setEndDate,
+    inflationRate,
+    setInflationRate,
   } = useDcaParams();
 
   const { prices, loading: pricesLoading, error } = useAssetPrice(asset);
@@ -49,9 +53,10 @@ export function useDcaCalculator(): DcaCalculatorHook {
       frequency,
       new Date(startDate),
       new Date(endDate),
+      inflationRate,
     );
     setResult(res);
-  }, [prices, amount, frequency, startDate, endDate]);
+  }, [prices, amount, frequency, startDate, endDate, inflationRate]);
 
   // Re-calculate when prices or inputs change with debounce
   useEffect(() => {
@@ -69,6 +74,7 @@ export function useDcaCalculator(): DcaCalculatorHook {
     frequency,
     startDate,
     endDate,
+    inflationRate,
     result,
     loading: pricesLoading,
     error,
@@ -78,6 +84,7 @@ export function useDcaCalculator(): DcaCalculatorHook {
     setFrequency,
     setStartDate,
     setEndDate,
+    setInflationRate,
     // Actions
     calculate: performCalculation,
   };

@@ -22,13 +22,20 @@
     "hide_form": "Hide Form",
     "show_form": "Show Form",
     "share_btn": "Copy Share Link",
-    "share_success": "Link copied to clipboard!"
+    "share_success": "Link copied to clipboard!",
+    "inflation_rate": "Annual Inflation (%)"
   },
   "results": {
     "total_invested": "Total Invested",
     "value_in": "Value in {{asset}}",
     "current_value": "Current Value",
-    "total_change": "Total Change"
+    "total_change": "Total Change",
+    "lump_sum_comparison": "Lump Sum Comparison",
+    "lump_sum_better": "Lump Sum would have been better",
+    "dca_better": "DCA was better",
+    "lump_sum_value": "Lump Sum Value",
+    "inflation_adjusted": "Inflation Adjusted (Purchasing Power)",
+    "real_value": "Real Value"
   },
   "transactions": {
     "title": "Purchase History",

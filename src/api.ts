@@ -6,6 +6,7 @@ import {
   addMonths,
   isBefore,
   startOfDay,
+  differenceInDays,
 } from "date-fns";
 import type { Asset, Frequency } from "./constants";
 import { ASSET_CONFIG } from "./constants";
@@ -26,6 +27,8 @@ export interface InvestmentResult {
   worstPrice: number;
   purchaseCount: number;
   currentPrice: number;
+  lumpSumValue: number;
+  inflationAdjustedValue: number;
   history: {
     date: string;
     invested: number;
@@ -96,6 +99,7 @@ export function calculateDCA(
   frequency: Frequency,
   startDate: Date,
   endDate: Date = new Date(),
+  inflationRate: number = 0,
 ): InvestmentResult {
   const start = startOfDay(startDate);
   const end = startOfDay(endDate);
@@ -154,6 +158,17 @@ export function calculateDCA(
   const currentPrice = prices[prices.length - 1]?.price || 0;
   const currentValue = accumulatedUnits * currentPrice;
 
+  // Calculate Lump Sum Comparison
+  // Assume the total amount invested via DCA was invested all at once on the first day
+  const firstPrice = relevantPrices[0]?.price || 0;
+  const lumpSumUnits = firstPrice > 0 ? accumulatedInvested / firstPrice : 0;
+  const lumpSumValue = lumpSumUnits * currentPrice;
+
+  // Calculate Inflation Adjusted Value (Purchasing Power)
+  const daysElapsed = differenceInDays(end, start);
+  const yearsElapsed = daysElapsed / 365.25;
+  const inflationAdjustedValue = currentValue / Math.pow(1 + inflationRate / 100, yearsElapsed);
+
   const buyPrices = transactions.map((t) => t.price);
 
   return {
@@ -170,6 +185,8 @@ export function calculateDCA(
     worstPrice: buyPrices.length > 0 ? Math.max(...buyPrices) : 0,
     purchaseCount: transactions.length,
     currentPrice: currentPrice,
+    lumpSumValue: lumpSumValue,
+    inflationAdjustedValue: inflationAdjustedValue,
     history,
     transactions,
   };

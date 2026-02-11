@@ -22,13 +22,20 @@
     "hide_form": "Ẩn thông số",
     "show_form": "Hiện thông số",
     "share_btn": "Sao chép liên kết chia sẻ",
-    "share_success": "Đã sao chép liên kết vào bộ nhớ tạm!"
+    "share_success": "Đã sao chép liên kết vào bộ nhớ tạm!",
+    "inflation_rate": "Lạm phát hàng năm (%)"
   },
   "results": {
     "total_invested": "Tổng vốn đầu tư",
     "value_in": "Giá trị quy đổi {{asset}}",
     "current_value": "Giá trị hiện tại",
-    "total_change": "Tổng thay đổi"
+    "total_change": "Tổng thay đổi",
+    "lump_sum_comparison": "So sánh với đầu tư một lần (Lump Sum)",
+    "lump_sum_better": "Đầu tư một lần sẽ tốt hơn",
+    "dca_better": "DCA hiệu quả hơn",
+    "lump_sum_value": "Giá trị Lump Sum",
+    "inflation_adjusted": "Điều chỉnh lạm phát (Sức mua)",
+    "real_value": "Giá trị thực"
   },
   "transactions": {
     "title": "Lịch sử mua",

@@ -2,8 +2,12 @@ import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { registerSW } from "virtual:pwa-register";
 import "./index.css";
 import "./i18n";
+
+// Register service worker
+registerSW({ immediate: true });
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen';

@@ -11,6 +11,7 @@ import {
   Calculator,
   ArrowDownCircle,
   ArrowUpCircle,
+  Zap,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
@@ -63,10 +64,17 @@ export const ResultsDashboard = memo(function ResultsDashboard({
             <div className="text-2xl font-bold">
               {result.totalUnits.toFixed(asset === "BTC" ? 8 : 4)} {config.unit}
             </div>
-            <p className="text-muted-foreground mt-1 text-xs font-medium">
-              {t("results.current_value")}:{" "}
-              {formatting.format(result.currentValue)}
-            </p>
+            <div className="mt-1 flex flex-col gap-1">
+              <p className="text-muted-foreground text-xs font-medium">
+                {t("results.current_value")}:{" "}
+                {formatting.format(result.currentValue)}
+              </p>
+              {result.inflationAdjustedValue !== result.currentValue && (
+                <p className="text-amber-500/80 text-[10px] font-bold uppercase tracking-wider">
+                  {t("results.real_value")}: {formatting.format(result.inflationAdjustedValue)}
+                </p>
+              )}
+            </div>
           </CardContent>
         </Card>
 
@@ -140,6 +148,34 @@ export const ResultsDashboard = memo(function ResultsDashboard({
           </div>
         </div>
       </div>
+
+      {/* Lump Sum Comparison */}
+      <Card className="border-white/10 bg-white/5 backdrop-blur-md">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-muted-foreground flex items-center gap-2 text-sm font-medium">
+            <Zap size={16} className="text-amber-400" />
+            {t("results.lump_sum_comparison")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+            <div className="space-y-1">
+              <p className="text-sm text-slate-400">{t("results.lump_sum_value")}</p>
+              <p className="text-2xl font-bold">{formatting.format(result.lumpSumValue)}</p>
+            </div>
+            <div className={`rounded-xl px-4 py-2 text-sm font-bold backdrop-blur-sm ${
+              result.currentValue > result.lumpSumValue 
+                ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20" 
+                : "bg-amber-500/10 text-amber-500 border border-amber-500/20"
+            }`}>
+              {result.currentValue > result.lumpSumValue 
+                ? `✨ ${t("results.dca_better")} (+${(( (result.currentValue - result.lumpSumValue) / result.lumpSumValue) * 100).toFixed(2)}%)`
+                : `📈 ${t("results.lump_sum_better")} (+${(( (result.lumpSumValue - result.currentValue) / result.currentValue) * 100).toFixed(2)}%)`
+              }
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 });

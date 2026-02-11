@@ -15,6 +15,7 @@ A professional, high-performance Dollar Cost Averaging (DCA) calculator for Bitc
   - Custom investment amounts.
   - Multiple frequencies (Daily, Weekly, Monthly).
   - Manual date entry support (`YYYY-MM-DD`) or visual calendar picker.
+- **Progressive Web App (PWA)**: Installable on mobile and desktop with offline support and fast loading.
 - **Localized Experience**: Multi-language support including English and Vietnamese.
 - **Optimized UI**: 
   - Modern, dark-themed interface with glassmorphism effects.
@@ -66,4 +67,18 @@ A professional, high-performance Dollar Cost Averaging (DCA) calculator for Bitc
 
 ## 📄 License
 
+
+
 Built for long-term visionaries. Use it to visualize your journey to financial freedom.
+
+
+
+## 🔮 Future Enhancements
+
+
+
+- **Lump Sum vs. DCA Comparison**: Compare your DCA strategy against investing the total amount upfront.
+
+- **Inflation-Adjusted Returns**: Visualize your real purchasing power by accounting for annual inflation.
+
+- **Advanced Exporting**: PDF reports with charts and comprehensive summary metrics for tax and record keeping.

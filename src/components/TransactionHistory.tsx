@@ -9,16 +9,15 @@ import { exportToCSV } from "@/lib/exportUtils";
 import { Download } from "lucide-react";
 
 interface TransactionHistoryProps {
-  transactions: InvestmentResult["transactions"];
-  currentPrice: number;
+  result: InvestmentResult;
   asset: Asset;
 }
 
 export const TransactionHistory = memo(function TransactionHistory({
-  transactions,
-  currentPrice,
+  result,
   asset,
 }: TransactionHistoryProps) {
+  const { transactions, currentPrice } = result;
   const { t } = useTranslation();
   const config = ASSET_CONFIG[asset];
 
@@ -34,7 +33,7 @@ export const TransactionHistory = memo(function TransactionHistory({
           variant="outline"
           size="sm"
           className="flex items-center gap-2 border-white/10 bg-white/5 hover:bg-white/10"
-          onClick={() => exportToCSV(transactions)}
+          onClick={() => exportToCSV(result, asset)}
         >
           <Download size={16} />
           {t("report.export_csv")}

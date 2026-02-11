@@ -86,8 +86,7 @@ function HomeComponent() {
                   <Chart data={dca.result.history} asset={dca.asset} />
                 </Suspense>
                 <TransactionHistory 
-                  transactions={dca.result.transactions} 
-                  currentPrice={dca.result.currentPrice} 
+                  result={dca.result} 
                   asset={dca.asset} 
                 />
               </>
