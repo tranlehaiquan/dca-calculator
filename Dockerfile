@@ -1,37 +1,48 @@
-# Stage 1: Build the frontend
+# ─────────────────────────────────────────────
+# Stage 1: Build the React/Vite frontend
+# ─────────────────────────────────────────────
 FROM node:20-slim AS builder
+
+# Enable pnpm via corepack (matches packageManager field in package.json)
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
 
+# Install dependencies first (better layer caching)
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+# Copy source and build
 COPY . .
 RUN pnpm build
 
-# Stage 2: Run the proxy server and serve frontend
-FROM node:20-slim
+# ─────────────────────────────────────────────
+# Stage 2: Production — proxy server + static
+# ─────────────────────────────────────────────
+FROM node:20-slim AS runner
+
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV NODE_ENV=production
+
 RUN corepack enable
 
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --prod
 
+# Install only production dependencies
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --prod
+
+# Copy built frontend assets from builder stage
 COPY --from=builder /app/dist ./dist
+
+# Copy the Express proxy server
 COPY server.js ./
 
-# Update server.js to serve static files in production
-RUN sed -i "s|app.use(cors());|app.use(cors());
-app.use(express.static('dist'));|" server.js
-# Ensure it handles SPA routing by serving index.html for unknown routes
-RUN echo "
-app.get('*', (req, res) => res.sendFile(path.resolve('dist', 'index.html')));" >> server.js
-# Need path import for the above
-RUN sed -i "1i import path from 'path';" server.js
-
+# Expose the port the Express server listens on
 EXPOSE 3001
+
+# Run the proxy + static file server
 CMD ["node", "server.js"]
