@@ -1,6 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
@@ -59,6 +64,14 @@ app.get('/api/yahoo/history', async (req, res) => {
     }
     res.status(500).json({ error: 'Failed to fetch history data from Yahoo Finance' });
   }
+});
+
+// Serve static frontend
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// SPA fallback — must be last
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 const PORT = process.env.PROXY_PORT || 3001;
