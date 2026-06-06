@@ -17,9 +17,7 @@ app.get('/api/yahoo/search', async (req, res) => {
       return res.status(400).json({ error: 'Missing query parameter q' });
     }
     const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${q}&quotesCount=10&newsCount=0&listsCount=0`;
-    
     console.log(`Fetching Search from Yahoo: ${url}`);
-    
     const response = await axios.get(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -27,7 +25,6 @@ app.get('/api/yahoo/search', async (req, res) => {
       },
       timeout: 10000,
     });
-    
     res.json(response.data);
   } catch (error) {
     console.error('Proxy Search error:', error.message);
@@ -45,9 +42,7 @@ app.get('/api/yahoo/history', async (req, res) => {
       return res.status(400).json({ error: 'Missing required parameters: symbol, period1, period2' });
     }
     const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?period1=${period1}&period2=${period2}&interval=1d&events=history`;
-    
     console.log(`Fetching History from Yahoo: ${url}`);
-    
     const response = await axios.get(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -55,7 +50,6 @@ app.get('/api/yahoo/history', async (req, res) => {
       },
       timeout: 10000,
     });
-    
     res.json(response.data);
   } catch (error) {
     console.error('Proxy History error:', error.message);
@@ -69,8 +63,8 @@ app.get('/api/yahoo/history', async (req, res) => {
 // Serve static frontend
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// SPA fallback — must be last
-app.get('*', (req, res) => {
+// SPA fallback — Express 5 compatible
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
